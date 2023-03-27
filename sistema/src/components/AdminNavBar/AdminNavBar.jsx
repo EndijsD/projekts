@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import * as S from './style';
 import { useNavigate } from 'react-router-dom';
 import { Menu, Brightness4, Brightness7 } from '@mui/icons-material';
+import useData from '../../hooks/useData';
 
 const pages = [
   { name: 'Māja', route: 'dashboard' },
@@ -25,6 +26,7 @@ function AdminNavBar() {
   const nav = useNavigate();
   const isAboveMedium = useMediaQuery((theme) => theme.breakpoints.up('md'));
   const theme = useTheme();
+  const { mode, changeMode } = useData();
 
   const logout = () => {
     console.log('Logout');
@@ -49,6 +51,10 @@ function AdminNavBar() {
     }
   }, [isAboveMedium]);
 
+  const switchMode = () => {
+    changeMode(mode == 'dark' ? 'light' : 'dark');
+  };
+
   return (
     <>
       <S.appBar>
@@ -67,7 +73,7 @@ function AdminNavBar() {
             ))}
           </S.box>
 
-          <S.iconButton onClick={() => console.log('Switch')}>
+          <S.iconButton onClick={switchMode}>
             {theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
           </S.iconButton>
 
