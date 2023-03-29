@@ -10,7 +10,7 @@ import AdminLogin from './pages/AdminLogin';
 import AdminNavBar from './components/AdminNavBar';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import useData from './hooks/useData';
-import { useState } from 'react';
+import Dashboard from './pages/Dashboard';
 
 function UserLayout() {
   return (
@@ -63,7 +63,9 @@ function App() {
               }
             />
 
-            <Route path="dashboard" element={<AdminLayout />}></Route>
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route path="/admin/dashboard" element={<Dashboard />} />
+            </Route>
           </Route>
         </Routes>
       </Router>

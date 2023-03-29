@@ -36,6 +36,5 @@ Priekš sava gala eksāmena projekta esmu izlēmis izveidot ģitāru tirdzniecī
   - Sadaļas - preču veidiem
   - "Par mums" lapa
 - Administrēšanas sistēma
-  - Tumšā režīma poga
   - Galvenā lapa - datu kopskats
   - Pārejās lapas - praktiski visas būs līdzīgas bet par citiem datiem
