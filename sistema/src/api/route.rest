@@ -1,0 +1,30 @@
+GET http://localhost:3001/pasutijumi
+
+###
+
+GET http://localhost:3001/cookbook/63f374d92ef1c4f221757a33
+
+###
+
+POST http://localhost:3001/cookbook
+Content-Type: application/json
+
+{
+    "title": "9",
+    "ingredients": ["9", "9"],
+    "method": "9",
+    "time": "9"
+}
+
+###
+
+DELETE http://localhost:3001/cookbook/63f374d92ef1c4f221757a33
+
+###
+
+PATCH http://localhost:3001/cookbook/63f374d92ef1c4f221757a33
+Content-Type: application/json
+
+{
+    "ingredients": ["9", "9", "9", "9"]
+}
