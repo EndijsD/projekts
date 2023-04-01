@@ -11,6 +11,8 @@ import AdminNavBar from './components/AdminNavBar';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import useData from './hooks/useData';
 import Dashboard from './pages/Dashboard';
+import Data from './pages/Data';
+import DataAccordion from './components/DataAccordion';
 
 function UserLayout() {
   return (
@@ -65,6 +67,7 @@ function App() {
 
             <Route path="/admin" element={<AdminLayout />}>
               <Route path="/admin/dashboard" element={<Dashboard />} />
+              <Route path="/admin/orders" element={<Data />} />
             </Route>
           </Route>
         </Routes>
