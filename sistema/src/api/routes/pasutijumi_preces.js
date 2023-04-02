@@ -2,10 +2,10 @@ import dotenv from 'dotenv';
 dotenv.config({ path: './src/api/.env' });
 import express from 'express';
 const router = express.Router();
-import db from './../database.js';
+import db from '../database.js';
 
 router.get('/', async (req, res) => {
-  const sql = 'SELECT * FROM pasutijumi';
+  const sql = 'SELECT * FROM pasutijumi_preces';
 
   db.query(sql, (err, result) => {
     if (err) {
@@ -69,8 +69,9 @@ router.get('/', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   const id = req.params.id;
+
   db.query(
-    'DELETE FROM pasutijumi WHERE pasutijumi_id = ?',
+    'DELETE FROM pasutijumi_preces WHERE pasutijumi_preces_id = ?',
     id,
     (err, result) => {
       if (err) {

@@ -7,14 +7,14 @@ import {
 import { ExpandMore } from '@mui/icons-material';
 import DataItem from '../DataItem';
 
-const DataAccordion = () => {
+const DataAccordion = ({ about }) => {
   return (
     <Accordion>
       <AccordionSummary expandIcon={<ExpandMore />}>
-        <Typography>Visi pasūtījumi</Typography>
+        <Typography>{about.title}</Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <DataItem />
+        <DataItem link={about.link} />
       </AccordionDetails>
     </Accordion>
   );

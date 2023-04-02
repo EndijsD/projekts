@@ -18,7 +18,7 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3001/cookbook/63f374d92ef1c4f221757a33
+DELETE http://localhost:3001/pasutijumi/4
 
 ###
 

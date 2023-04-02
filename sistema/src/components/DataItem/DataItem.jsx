@@ -1,32 +1,74 @@
 import { Box } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
-// import { Delete } from '@mui/icons-material/Delete';
+import { DataGrid, gridClasses } from '@mui/x-data-grid';
 import useFetch from '../../hooks/useFetch';
 import url from '../../url';
 import moment from 'moment';
+import { grey } from '@mui/material/colors';
+import { useMemo, useState } from 'react';
+import Actions from '../Actions';
+import useColumns from './useColumns';
 
-const DataItem = () => {
-  const { data, isPending, error } = useFetch(url);
+const DataItem = ({ link }) => {
+  const { data, isPending, error } = useFetch(link);
+  const { columns, setEditedRowID, setSelectedRowID } = useColumns(link);
+  // const [editedRowID, setEditedRowID] = useState(null);
+  // const [selectedRowID, setSelectedRowID] = useState(null);
 
-  const columns = [
-    { field: 'pasutijumi_id', headerName: 'ID' },
-    { field: 'id_lietotaji', headerName: 'Lietotāji ID' },
-    {
-      field: 'id_neregistreti_klienti',
-      headerName: 'Nereģistrēti Klienti ID',
-    },
-    {
-      field: 'status',
-      headerName: 'Status',
-    },
-    {
-      field: 'izveidosanas_datums',
-      headerName: 'Izveidošanas Datums',
-      width: 200,
-      renderCell: (params) =>
-        moment(params.row.izveidosanas_datums).format('YYYY-MM-DD HH:MM:SS'),
-    },
-  ];
+  // const columns = useMemo(
+  //   () => [
+  //     { field: 'pasutijumi_id', headerName: 'ID', width: 70 },
+  //     {
+  //       field: 'id_lietotaji',
+  //       headerName: 'Lietotāji ID',
+  //       type: 'number',
+  //       editable: true,
+  //     },
+  //     {
+  //       field: 'id_neregistreti_klienti',
+  //       headerName: 'Nereģistrēti Klienti ID',
+  //       width: 150,
+  //       type: 'number',
+  //       editable: true,
+  //     },
+  //     {
+  //       field: 'status',
+  //       headerName: 'Status',
+  //       width: 160,
+  //       type: 'singleSelect',
+  //       valueOptions: [
+  //         'Gaida apmaksu',
+  //         'Sagatavo izsūtīšanai',
+  //         'Izsūtīts',
+  //         'Izpildīts',
+  //       ],
+  //       editable: true,
+  //     },
+  //     {
+  //       field: 'izveidosanas_datums',
+  //       headerName: 'Izveidošanas Datums',
+  //       width: 160,
+  //       valueFormatter: (params) =>
+  //         moment(params.value).format('YYYY-MM-DD HH:mm:ss'),
+  //     },
+  //     {
+  //       field: 'actions',
+  //       headerName: 'Actions',
+  //       type: 'actions',
+  //       renderCell: (params) => (
+  //         <Actions
+  //           {...{
+  //             params,
+  //             editedRowID,
+  //             setEditedRowID,
+  //             selectedRowID,
+  //             setSelectedRowID,
+  //           }}
+  //         />
+  //       ),
+  //     },
+  //   ],
+  //   [editedRowID, selectedRowID]
+  // );
 
   return (
     <Box>
@@ -35,23 +77,32 @@ const DataItem = () => {
           autoHeight
           rows={data}
           columns={columns}
-          getRowId={(row) => row.pasutijumi_id}
+          hideFooterSelectedRowCount
+          getRowId={(row) =>
+            row[Object.keys(row).filter((key) => key.includes('_id'))[0]]
+          }
+          pageSizeOptions={[10, 20, 30]}
           initialState={{
             pagination: {
               paginationModel: {
-                pageSize: 25,
+                pageSize: 10,
               },
             },
           }}
-          checkboxSelection
-          disableRowSelectionOnClick
+          getRowSpacing={(params) => ({
+            top: params.isFirstVisible ? 0 : 5,
+            bottom: params.isLastVisible ? 0 : 5,
+          })}
+          sx={{
+            [`& .${gridClasses.row}`]: {
+              bgcolor: (theme) =>
+                theme.palette.mode === 'light' ? grey[200] : grey[900],
+            },
+          }}
+          onCellEditStop={(params) => setEditedRowID(params.id)}
+          onRowClick={(params) => setSelectedRowID(params.id)}
         />
       )}
-      {/* <Tooltip title="Delete">
-        <IconButton>
-          <Delete />
-        </IconButton>
-      </Tooltip> */}
     </Box>
   );
 };
