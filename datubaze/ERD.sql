@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `ERD`.`atsauksmes` (
   `komentars` VARCHAR(255) NULL,
   `id_preces` INT NOT NULL,
   `id_lietotaji` INT NOT NULL,
-  PRIMARY KEY (`atsauksmes_id`),
+  PRIMARY KEY (`atsauksmes_id`, `id_preces`, `id_lietotaji`),
   CONSTRAINT `fk_atsauksmes_preces1`
     FOREIGN KEY (`id_preces`)
     REFERENCES `ERD`.`preces` (`preces_id`)
@@ -221,10 +221,11 @@ CREATE UNIQUE INDEX `id_neregistreti_klienti_UNIQUE` ON `ERD`.`pasutijumi` (`id_
 DROP TABLE IF EXISTS `ERD`.`pasutijumi_preces` ;
 
 CREATE TABLE IF NOT EXISTS `ERD`.`pasutijumi_preces` (
+  `pasutijumi_preces_id` INT NOT NULL AUTO_INCREMENT,
   `id_pasutijumi` INT NOT NULL,
   `id_preces` INT NOT NULL,
   `skaits` INT NOT NULL DEFAULT 1,
-  PRIMARY KEY (`id_pasutijumi`, `id_preces`),
+  PRIMARY KEY (`pasutijumi_preces_id`, `id_pasutijumi`, `id_preces`),
   CONSTRAINT `fk_pasutijumi_has_preces_pasutijumi1`
     FOREIGN KEY (`id_pasutijumi`)
     REFERENCES `ERD`.`pasutijumi` (`pasutijumi_id`)
@@ -240,6 +241,8 @@ ENGINE = InnoDB;
 CREATE INDEX `fk_pasutijumi_has_preces_preces1_idx` ON `ERD`.`pasutijumi_preces` (`id_preces` ASC) VISIBLE;
 
 CREATE INDEX `fk_pasutijumi_has_preces_pasutijumi1_idx` ON `ERD`.`pasutijumi_preces` (`id_pasutijumi` ASC) VISIBLE;
+
+CREATE UNIQUE INDEX `pasutijumi_preces_id_UNIQUE` ON `ERD`.`pasutijumi_preces` (`pasutijumi_preces_id` ASC) VISIBLE;
 
 
 -- -----------------------------------------------------
@@ -372,8 +375,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `ERD`;
-INSERT INTO `ERD`.`pasutijumi_preces` (`id_pasutijumi`, `id_preces`, `skaits`) VALUES (1, 1, DEFAULT);
-INSERT INTO `ERD`.`pasutijumi_preces` (`id_pasutijumi`, `id_preces`, `skaits`) VALUES (2, 1, 2);
+INSERT INTO `ERD`.`pasutijumi_preces` (`pasutijumi_preces_id`, `id_pasutijumi`, `id_preces`, `skaits`) VALUES (DEFAULT, 1, 1, DEFAULT);
+INSERT INTO `ERD`.`pasutijumi_preces` (`pasutijumi_preces_id`, `id_pasutijumi`, `id_preces`, `skaits`) VALUES (DEFAULT, 2, 1, 2);
 
 COMMIT;
 
