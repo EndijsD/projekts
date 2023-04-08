@@ -14,9 +14,11 @@ Priekš sava gala eksāmena projekta esmu izlēmis izveidot ģitāru tirdzniecī
 - Word 2016
 
 ##### Sistēma
-- React
+- JavaScript - React un Node.js
+- HTML
+- CSS - Lielākoties izmantots ar MUI styled()
 - Git & GitHub
-- Javascript & HTML & CSS
+- Visual Studio Code
 
 ### *Kā palaist projektu* ❓
 ---
