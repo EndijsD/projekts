@@ -3,11 +3,11 @@ import * as S from './style';
 
 const Data = ({ about }) => {
   return (
-    <S.box>
+    <S.paper>
       {about.map((item) => {
         return <DataAccordion key={item.title} about={item} />;
       })}
-    </S.box>
+    </S.paper>
   );
 };
 

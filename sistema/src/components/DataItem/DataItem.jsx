@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { DataGrid, gridClasses } from '@mui/x-data-grid';
 import useFetch from '../../hooks/useFetch';
 import url from '../../url';
@@ -72,7 +72,7 @@ const DataItem = ({ link }) => {
 
   return (
     <Box>
-      {!isPending && (
+      {!isPending && !error && (
         <DataGrid
           autoHeight
           rows={data}
@@ -103,6 +103,7 @@ const DataItem = ({ link }) => {
           onRowClick={(params) => setSelectedRowID(params.id)}
         />
       )}
+      {error && <Typography>{error}</Typography>}
     </Box>
   );
 };

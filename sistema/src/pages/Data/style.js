@@ -1,6 +1,6 @@
 import { styled } from '@mui/system';
-import { Box, Paper, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 
-export const box = styled(Paper)`
+export const paper = styled(Box)`
   margin: 3rem;
 `;
