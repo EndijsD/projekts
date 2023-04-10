@@ -1,7 +1,7 @@
 import { Box, CircularProgress, Fab } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { Check, Delete, Save } from '@mui/icons-material';
-import { green } from '@mui/material/colors';
+import { Check, Close, Delete, Save } from '@mui/icons-material';
+import { green, red } from '@mui/material/colors';
 
 const Actions = ({
   params,
@@ -9,38 +9,65 @@ const Actions = ({
   setEditedRowID,
   selectedRowID,
   setSelectedRowID,
+  link,
+  setDeletedRow,
 }) => {
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [saveLoading, setSaveLoading] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [saveFailure, setSaveFailure] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [deleteFailure, setDeleteFailure] = useState(false);
 
   const handleEdit = async () => {
-    setLoading(true);
-    console.log('Updated entry: ' + params.id);
+    setSaveLoading(true);
 
-    // const { role, active, _id } = params.row;
-    // const result = await updateStatus({ role, active }, _id, dispatch);
-    // if (result) {
-    //   setSuccess(true);
-    //   setEditedRowID(null);
-    // }
-
-    setTimeout(() => {
-      setLoading(false);
-      setSuccess(true);
+    fetch(link + '/' + params.id, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params.row),
+    }).then((res) => {
+      setSaveLoading(false);
       setEditedRowID(null);
-      setTimeout(() => {
-        setSuccess(false);
-      }, 1500);
-    }, 1500);
+
+      if (!res.ok) {
+        setSaveFailure(true);
+
+        setTimeout(() => {
+          setSaveFailure(false);
+        }, 1500);
+      } else {
+        setSaveSuccess(true);
+
+        setTimeout(() => {
+          setSaveSuccess(false);
+        }, 1500);
+      }
+    });
   };
 
   const handleDelete = () => {
-    console.log('Deleted entry: ' + params.id);
-    setSelectedRowID(null);
+    setDeleteLoading(true);
+
+    fetch(link + '/' + params.id, {
+      method: 'DELETE',
+    }).then((res) => {
+      setDeleteLoading(false);
+      setSelectedRowID(null);
+
+      if (!res.ok) {
+        setDeleteFailure(true);
+
+        setTimeout(() => {
+          setDeleteFailure(false);
+        }, 1500);
+      } else {
+        setDeletedRow(params.id);
+      }
+    });
   };
 
   useEffect(() => {
-    if (editedRowID === params.id && success) setSuccess(false);
+    if (editedRowID === params.id && saveSuccess) setSaveSuccess(false);
   }, [editedRowID]);
 
   return (
@@ -50,7 +77,19 @@ const Actions = ({
         position: 'relative',
       }}
     >
-      {success ? (
+      {saveFailure ? (
+        <Fab
+          color="primary"
+          sx={{
+            width: 40,
+            height: 40,
+            bgcolor: red[500],
+            '&:hover': { bgcolor: red[700] },
+          }}
+        >
+          <Close />
+        </Fab>
+      ) : saveSuccess ? (
         <Fab
           color="primary"
           sx={{
@@ -69,13 +108,13 @@ const Actions = ({
             width: 40,
             height: 40,
           }}
-          disabled={params.id !== editedRowID || loading}
+          disabled={params.id !== editedRowID || saveLoading || deleteLoading}
           onClick={handleEdit}
         >
           <Save />
         </Fab>
       )}
-      {loading && (
+      {saveLoading && (
         <CircularProgress
           size={52}
           sx={{
@@ -87,19 +126,45 @@ const Actions = ({
           }}
         />
       )}
-
-      <Fab
-        color="primary"
-        sx={{
-          marginLeft: 1,
-          width: 40,
-          height: 40,
-        }}
-        disabled={params.id !== selectedRowID || loading}
-        onClick={handleDelete}
-      >
-        <Delete />
-      </Fab>
+      {deleteFailure ? (
+        <Fab
+          color="primary"
+          sx={{
+            marginLeft: 1,
+            width: 40,
+            height: 40,
+            bgcolor: red[500],
+            '&:hover': { bgcolor: red[700] },
+          }}
+        >
+          <Close />
+        </Fab>
+      ) : (
+        <Fab
+          color="primary"
+          sx={{
+            marginLeft: 1,
+            width: 40,
+            height: 40,
+          }}
+          disabled={params.id !== selectedRowID || deleteLoading || saveLoading}
+          onClick={handleDelete}
+        >
+          <Delete />
+        </Fab>
+      )}
+      {deleteLoading && (
+        <CircularProgress
+          size={52}
+          sx={{
+            color: red[500],
+            position: 'absolute',
+            top: -6,
+            left: 42,
+            zIndex: 1,
+          }}
+        />
+      )}
     </Box>
   );
 };

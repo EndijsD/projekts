@@ -2,7 +2,7 @@ import moment from 'moment';
 import { useMemo, useState } from 'react';
 import Actions from '../Actions';
 
-const useColumns = (link) => {
+const useColumns = (link, setDeletedRow) => {
   const [editedRowID, setEditedRowID] = useState(null);
   const [selectedRowID, setSelectedRowID] = useState(null);
 
@@ -46,7 +46,7 @@ const useColumns = (link) => {
           },
           {
             field: 'actions',
-            headerName: 'Actions',
+            headerName: 'Darbības',
             type: 'actions',
             renderCell: (params) => (
               <Actions
@@ -56,6 +56,8 @@ const useColumns = (link) => {
                   setEditedRowID,
                   selectedRowID,
                   setSelectedRowID,
+                  link,
+                  setDeletedRow,
                 }}
               />
             ),
@@ -84,7 +86,7 @@ const useColumns = (link) => {
           },
           {
             field: 'actions',
-            headerName: 'Actions',
+            headerName: 'Darbības',
             type: 'actions',
             renderCell: (params) => (
               <Actions
@@ -94,6 +96,8 @@ const useColumns = (link) => {
                   setEditedRowID,
                   selectedRowID,
                   setSelectedRowID,
+                  link,
+                  setDeletedRow,
                 }}
               />
             ),

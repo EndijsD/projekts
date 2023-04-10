@@ -1,74 +1,17 @@
 import { Box, Typography } from '@mui/material';
 import { DataGrid, gridClasses } from '@mui/x-data-grid';
 import useFetch from '../../hooks/useFetch';
-import url from '../../url';
-import moment from 'moment';
 import { grey } from '@mui/material/colors';
-import { useMemo, useState } from 'react';
-import Actions from '../Actions';
+import { useState } from 'react';
 import useColumns from './useColumns';
 
 const DataItem = ({ link }) => {
-  const { data, isPending, error } = useFetch(link);
-  const { columns, setEditedRowID, setSelectedRowID } = useColumns(link);
-  // const [editedRowID, setEditedRowID] = useState(null);
-  // const [selectedRowID, setSelectedRowID] = useState(null);
-
-  // const columns = useMemo(
-  //   () => [
-  //     { field: 'pasutijumi_id', headerName: 'ID', width: 70 },
-  //     {
-  //       field: 'id_lietotaji',
-  //       headerName: 'Lietotāji ID',
-  //       type: 'number',
-  //       editable: true,
-  //     },
-  //     {
-  //       field: 'id_neregistreti_klienti',
-  //       headerName: 'Nereģistrēti Klienti ID',
-  //       width: 150,
-  //       type: 'number',
-  //       editable: true,
-  //     },
-  //     {
-  //       field: 'status',
-  //       headerName: 'Status',
-  //       width: 160,
-  //       type: 'singleSelect',
-  //       valueOptions: [
-  //         'Gaida apmaksu',
-  //         'Sagatavo izsūtīšanai',
-  //         'Izsūtīts',
-  //         'Izpildīts',
-  //       ],
-  //       editable: true,
-  //     },
-  //     {
-  //       field: 'izveidosanas_datums',
-  //       headerName: 'Izveidošanas Datums',
-  //       width: 160,
-  //       valueFormatter: (params) =>
-  //         moment(params.value).format('YYYY-MM-DD HH:mm:ss'),
-  //     },
-  //     {
-  //       field: 'actions',
-  //       headerName: 'Actions',
-  //       type: 'actions',
-  //       renderCell: (params) => (
-  //         <Actions
-  //           {...{
-  //             params,
-  //             editedRowID,
-  //             setEditedRowID,
-  //             selectedRowID,
-  //             setSelectedRowID,
-  //           }}
-  //         />
-  //       ),
-  //     },
-  //   ],
-  //   [editedRowID, selectedRowID]
-  // );
+  const [deletedRow, setDeletedRow] = useState(null);
+  const { data, isPending, error } = useFetch(link, deletedRow);
+  const { columns, setEditedRowID, setSelectedRowID } = useColumns(
+    link,
+    setDeletedRow
+  );
 
   return (
     <Box>

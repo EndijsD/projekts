@@ -3,6 +3,7 @@ dotenv.config({ path: './src/api/.env' });
 import express from 'express';
 const router = express.Router();
 import db from './database.js';
+import moment from 'moment';
 
 router.get('/', async (req, res) => {
   const table = req.baseUrl.slice(1);
@@ -53,7 +54,11 @@ router.patch('/:id', async (req, res) => {
   const keys = Object.keys(req.body)
     .map((key) => key + '=?')
     .toString();
-  const values = Object.values(req.body);
+  const values = Object.values(req.body).map((value) =>
+    moment(value, moment.ISO_8601, true).isValid()
+      ? moment(value).format('YYYY-MM-DD HH:mm:ss')
+      : value
+  );
 
   db.query(
     `UPDATE ${table} SET ${keys} WHERE ${table}_id = ?`,

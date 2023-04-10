@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const useFetch = (url) => {
+const useFetch = (url, deletedRow) => {
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
@@ -28,7 +28,7 @@ const useFetch = (url) => {
       });
 
     return () => abortController.abort();
-  }, [url]);
+  }, [url, deletedRow]);
 
   return { data, isPending, error };
 };
