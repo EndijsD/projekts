@@ -264,9 +264,10 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `ERD`.`precu_specifikacija_ipasibas` ;
 
 CREATE TABLE IF NOT EXISTS `ERD`.`precu_specifikacija_ipasibas` (
+  `precu_specifikacija_ipasibas_id` INT NOT NULL AUTO_INCREMENT,
   `id_precu_specifikacija` INT NOT NULL,
   `id_ipasibas` INT NOT NULL,
-  PRIMARY KEY (`id_precu_specifikacija`, `id_ipasibas`),
+  PRIMARY KEY (`precu_specifikacija_ipasibas_id`, `id_precu_specifikacija`, `id_ipasibas`),
   CONSTRAINT `fk_precu_specifikacija_has_ipasibas_precu_specifikacija1`
     FOREIGN KEY (`id_precu_specifikacija`)
     REFERENCES `ERD`.`precu_specifikacija` (`precu_specifikacija_id`)
@@ -282,6 +283,8 @@ ENGINE = InnoDB;
 CREATE INDEX `fk_precu_specifikacija_has_ipasibas_ipasibas1_idx` ON `ERD`.`precu_specifikacija_ipasibas` (`id_ipasibas` ASC) VISIBLE;
 
 CREATE INDEX `fk_precu_specifikacija_has_ipasibas_precu_specifikacija1_idx` ON `ERD`.`precu_specifikacija_ipasibas` (`id_precu_specifikacija` ASC) VISIBLE;
+
+CREATE UNIQUE INDEX `precu_specifikacija_ipasibas_id_UNIQUE` ON `ERD`.`precu_specifikacija_ipasibas` (`precu_specifikacija_ipasibas_id` ASC) VISIBLE;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
@@ -402,13 +405,13 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `ERD`;
-INSERT INTO `ERD`.`precu_specifikacija_ipasibas` (`id_precu_specifikacija`, `id_ipasibas`) VALUES (1, 1);
-INSERT INTO `ERD`.`precu_specifikacija_ipasibas` (`id_precu_specifikacija`, `id_ipasibas`) VALUES (1, 2);
-INSERT INTO `ERD`.`precu_specifikacija_ipasibas` (`id_precu_specifikacija`, `id_ipasibas`) VALUES (1, 3);
-INSERT INTO `ERD`.`precu_specifikacija_ipasibas` (`id_precu_specifikacija`, `id_ipasibas`) VALUES (1, 4);
-INSERT INTO `ERD`.`precu_specifikacija_ipasibas` (`id_precu_specifikacija`, `id_ipasibas`) VALUES (1, 5);
-INSERT INTO `ERD`.`precu_specifikacija_ipasibas` (`id_precu_specifikacija`, `id_ipasibas`) VALUES (1, 6);
-INSERT INTO `ERD`.`precu_specifikacija_ipasibas` (`id_precu_specifikacija`, `id_ipasibas`) VALUES (1, 7);
+INSERT INTO `ERD`.`precu_specifikacija_ipasibas` (`precu_specifikacija_ipasibas_id`, `id_precu_specifikacija`, `id_ipasibas`) VALUES (DEFAULT, 1, 1);
+INSERT INTO `ERD`.`precu_specifikacija_ipasibas` (`precu_specifikacija_ipasibas_id`, `id_precu_specifikacija`, `id_ipasibas`) VALUES (DEFAULT, 1, 2);
+INSERT INTO `ERD`.`precu_specifikacija_ipasibas` (`precu_specifikacija_ipasibas_id`, `id_precu_specifikacija`, `id_ipasibas`) VALUES (DEFAULT, 1, 3);
+INSERT INTO `ERD`.`precu_specifikacija_ipasibas` (`precu_specifikacija_ipasibas_id`, `id_precu_specifikacija`, `id_ipasibas`) VALUES (DEFAULT, 1, 4);
+INSERT INTO `ERD`.`precu_specifikacija_ipasibas` (`precu_specifikacija_ipasibas_id`, `id_precu_specifikacija`, `id_ipasibas`) VALUES (DEFAULT, 1, 5);
+INSERT INTO `ERD`.`precu_specifikacija_ipasibas` (`precu_specifikacija_ipasibas_id`, `id_precu_specifikacija`, `id_ipasibas`) VALUES (DEFAULT, 1, 6);
+INSERT INTO `ERD`.`precu_specifikacija_ipasibas` (`precu_specifikacija_ipasibas_id`, `id_precu_specifikacija`, `id_ipasibas`) VALUES (DEFAULT, 1, 7);
 
 COMMIT;
 

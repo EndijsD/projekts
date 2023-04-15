@@ -39,6 +39,31 @@ const fixedTheme = createTheme({
   },
 });
 
+const tableData = {
+  orders: [
+    { title: 'Visi pasūtījumi', link: url + 'pasutijumi' },
+    {
+      title: 'Pasūtījumu preču sasaistes tabula',
+      link: url + 'pasutijumi_preces',
+    },
+  ],
+  products: [
+    { title: 'Visas preces', link: url + 'preces' },
+    { title: 'Visas preču specifikācijas', link: url + 'precu_specifikacija' },
+    {
+      title: 'Preču specifikāciju un īpašību sasaistes tabula',
+      link: url + 'precu_specifikacija_ipasibas',
+    },
+    { title: 'Visas īpašības', link: url + 'ipasibas' },
+  ],
+  users: [
+    { title: 'Visi lietotāji', link: url + 'lietotaji' },
+    { title: 'Visi nereģistrētie klienti', link: url + 'neregistreti_klienti' },
+    { title: 'Visas adreses', link: url + 'adreses' },
+  ],
+  reviews: [{ title: 'Visas atsauksmes', link: url + 'atsauksmes' }],
+};
+
 function App() {
   const { mode } = useData();
 
@@ -67,21 +92,13 @@ function App() {
 
             <Route path="/admin" element={<AdminLayout />}>
               <Route path="/admin/dashboard" element={<Dashboard />} />
-              <Route
-                path="/admin/orders"
-                element={
-                  <Data
-                    about={[
-                      { title: 'Visi pasūtījumi', link: url + 'pasutijumi' },
-                      {
-                        title: 'Visas pasūtījumu preces',
-                        link: url + 'pasutijumi_preces',
-                      },
-                    ]}
-                  />
-                }
-              />
-              {/* <Route path="/admin/products" element={<Data />} /> */}
+              {Object.keys(tableData).map((keys) => (
+                <Route
+                  key={keys}
+                  path={'/admin/' + keys}
+                  element={<Data about={tableData[keys]} />}
+                />
+              ))}
             </Route>
           </Route>
         </Routes>

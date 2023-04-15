@@ -23,6 +23,7 @@ const DataItem = ({ link }) => {
           rowHeight={60}
           hideFooterSelectedRowCount
           getRowId={(row) =>
+            /* Lai nebūtu obligāti jātaisa katrā tabulā savs ID lauks varētu arī izmantot nejaušu UUID - https://www.npmjs.com/package/uuid */
             row[Object.keys(row).filter((key) => key.includes('_id'))[0]]
           }
           pageSizeOptions={[10, 20, 30]}
