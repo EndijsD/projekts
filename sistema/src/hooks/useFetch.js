@@ -11,14 +11,17 @@ const useFetch = (url, deletedRow) => {
     fetch(url, { signal: abortController.signal })
       .then((response) => {
         if (!response.ok) {
-          throw Error('could not fetch the data for that resource');
+          throw Error('nevarēja dabūt datus priekš tā resursa');
         }
         return response.json();
       })
       .then((data) => {
+        // Lai imitētu ilgu datu iegūšanu no datubāzes
+        // setTimeout(() => {
         setData(data);
         setIsPending(false);
         setError(null);
+        // }, 1000);
       })
       .catch((err) => {
         if (err.name !== 'AbortError') {

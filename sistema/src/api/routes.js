@@ -1,6 +1,7 @@
 import express from 'express';
 const router = express.Router();
 import requests from './requests.js';
+import specialRequests from './specialRequests.js';
 
 router.use('/pasutijumi', requests);
 router.use('/pasutijumi_preces', requests);
@@ -13,5 +14,7 @@ router.use('/preces', requests);
 router.use('/precu_specifikacija', requests);
 router.use('/precu_specifikacija_ipasibas', requests);
 router.use('/ipasibas', requests);
+
+router.use('/special', specialRequests);
 
 export default router;

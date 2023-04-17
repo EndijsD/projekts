@@ -1,9 +1,11 @@
-import { Box, Typography } from '@mui/material';
+import { Typography, useTheme } from '@mui/material';
 import { DataGrid, gridClasses } from '@mui/x-data-grid';
 import useFetch from '../../hooks/useFetch';
 import { grey } from '@mui/material/colors';
 import { useState } from 'react';
-import useColumns from './useColumns';
+import useColumns from '../../hooks/useColumns';
+import * as S from './style';
+import { HashLoader } from 'react-spinners';
 
 const DataItem = ({ link }) => {
   const [deletedRow, setDeletedRow] = useState(null);
@@ -12,9 +14,10 @@ const DataItem = ({ link }) => {
     link,
     setDeletedRow
   );
+  const theme = useTheme();
 
   return (
-    <Box>
+    <>
       {!isPending && !error && (
         <DataGrid
           autoHeight={data.length < 7 ? true : false}
@@ -75,7 +78,12 @@ const DataItem = ({ link }) => {
         />
       )}
       {error && <Typography>{error}</Typography>}
-    </Box>
+      {isPending && (
+        <S.StyledBox>
+          <HashLoader color={theme.palette.primary.main} />
+        </S.StyledBox>
+      )}
+    </>
   );
 };
 

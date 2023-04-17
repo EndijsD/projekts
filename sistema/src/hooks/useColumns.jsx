@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { useMemo, useState } from 'react';
-import Actions from '../Actions';
+import Actions from '../components/Actions';
 
 const useColumns = (link, setDeletedRow) => {
   const [editedRowID, setEditedRowID] = useState(null);

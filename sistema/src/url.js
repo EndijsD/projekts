@@ -1,7 +1,6 @@
 const protocol = 'http';
 const ip = 'localhost';
 const port = '3001';
-// const resource = 'pasutijumi';
 
-const url = protocol + '://' + ip + ':' + port + '/'; // + resource;
+const url = protocol + '://' + ip + ':' + port + '/';
 export default url;
