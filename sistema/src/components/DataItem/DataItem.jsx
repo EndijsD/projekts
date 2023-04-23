@@ -1,24 +1,79 @@
 import { Typography, useTheme } from '@mui/material';
-import { DataGrid, gridClasses } from '@mui/x-data-grid';
+import { DataGrid, GridFooter, gridClasses } from '@mui/x-data-grid';
 import useFetch from '../../hooks/useFetch';
 import { grey } from '@mui/material/colors';
 import { useState } from 'react';
 import useColumns from '../../hooks/useColumns';
 import * as S from './style';
 import { HashLoader } from 'react-spinners';
+import { Add } from '@mui/icons-material';
+import moment from 'moment';
 
-const DataItem = ({ link }) => {
-  const [deletedRow, setDeletedRow] = useState(null);
-  const { data, isPending, error } = useFetch(link, deletedRow);
-  const { columns, setEditedRowID, setSelectedRowID } = useColumns(
+const DataItem = ({ link, canAdd }) => {
+  const [modifiedRow, setModifiedRow] = useState(false);
+  const { data, isPending, error, setData, initialLoad } = useFetch(
     link,
-    setDeletedRow
+    modifiedRow
+  );
+  const { columns, setEditedRowIDs, setSelectedRowID } = useColumns(
+    link,
+    setModifiedRow
   );
   const theme = useTheme();
 
+  function CustomFooter() {
+    const handleShowNew = () => {
+      const keys = Object.keys(data[0]);
+
+      if (data[0][keys.filter((key) => key.includes('_id'))[0]] !== 'AUTO') {
+        const emptyEntry = {};
+
+        keys.map((key) =>
+          key.includes('_id')
+            ? (emptyEntry[key] = 'AUTO')
+            : key == 'izveidosanas_datums'
+            ? (emptyEntry[key] = moment().format('YYYY-MM-DD HH:mm:ss'))
+            : (emptyEntry[key] = '')
+        );
+
+        setData((prev) => [emptyEntry, ...prev]);
+      }
+    };
+
+    return (
+      <S.StyledGridFooterContainer sx={{ justifyContent: !canAdd && 'end' }}>
+        {canAdd && (
+          <S.StyledButton
+            color="primary"
+            startIcon={<Add />}
+            onClick={handleShowNew}
+          >
+            Pievienot
+          </S.StyledButton>
+        )}
+
+        <GridFooter
+          sx={{
+            border: 'none',
+          }}
+        />
+      </S.StyledGridFooterContainer>
+    );
+  }
+
+  function CustomToolbar() {
+    if (!initialLoad && isPending) {
+      return (
+        <S.MUIGridToolbarContainer>
+          <HashLoader color={theme.palette.primary.main} />
+        </S.MUIGridToolbarContainer>
+      );
+    }
+  }
+
   return (
     <>
-      {!isPending && !error && (
+      {!initialLoad && !error && (
         <DataGrid
           autoHeight={data.length < 7 ? true : false}
           rows={data}
@@ -44,7 +99,9 @@ const DataItem = ({ link }) => {
                 theme.palette.mode === 'light' ? grey[200] : grey[900],
             },
           }}
-          onCellEditStop={(params) => setEditedRowID(params.id)}
+          onCellEditStop={(params) =>
+            setEditedRowIDs((prev) => [...prev, params.id])
+          }
           onRowClick={(params) => setSelectedRowID(params.id)}
           localeText={{
             columnHeaderSortIconLabel: 'Šķirot',
@@ -75,10 +132,11 @@ const DataItem = ({ link }) => {
                 `Iet uz ${type == 'next' ? 'nākamo' : 'iepriekšējo'} lappusi`,
             },
           }}
+          slots={{ toolbar: CustomToolbar, footer: CustomFooter }}
         />
       )}
       {error && <Typography>{error}</Typography>}
-      {isPending && (
+      {initialLoad && (
         <S.StyledBox>
           <HashLoader color={theme.palette.primary.main} />
         </S.StyledBox>

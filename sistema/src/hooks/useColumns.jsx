@@ -2,8 +2,8 @@ import moment from 'moment';
 import { useMemo, useState } from 'react';
 import Actions from '../components/Actions';
 
-const useColumns = (link, setDeletedRow) => {
-  const [editedRowID, setEditedRowID] = useState(null);
+const useColumns = (link, setModifiedRow) => {
+  const [editedRowIDs, setEditedRowIDs] = useState([]);
   const [selectedRowID, setSelectedRowID] = useState(null);
 
   const columns = useMemo(() => {
@@ -37,6 +37,7 @@ const useColumns = (link, setDeletedRow) => {
               'Sagatavo izsūtīšanai',
               'Izsūtīts',
               'Izpildīts',
+              'Atcelts',
             ],
             editable: true,
             flex: 1,
@@ -57,12 +58,12 @@ const useColumns = (link, setDeletedRow) => {
               <Actions
                 {...{
                   params,
-                  editedRowID,
-                  setEditedRowID,
+                  editedRowIDs,
+                  setEditedRowIDs,
                   selectedRowID,
                   setSelectedRowID,
                   link,
-                  setDeletedRow,
+                  setModifiedRow,
                 }}
               />
             ),
@@ -110,12 +111,12 @@ const useColumns = (link, setDeletedRow) => {
               <Actions
                 {...{
                   params,
-                  editedRowID,
-                  setEditedRowID,
+                  editedRowIDs,
+                  setEditedRowIDs,
                   selectedRowID,
                   setSelectedRowID,
                   link,
-                  setDeletedRow,
+                  setModifiedRow,
                 }}
               />
             ),
@@ -164,12 +165,12 @@ const useColumns = (link, setDeletedRow) => {
               <Actions
                 {...{
                   params,
-                  editedRowID,
-                  setEditedRowID,
+                  editedRowIDs,
+                  setEditedRowIDs,
                   selectedRowID,
                   setSelectedRowID,
                   link,
-                  setDeletedRow,
+                  setModifiedRow,
                 }}
               />
             ),
@@ -214,12 +215,12 @@ const useColumns = (link, setDeletedRow) => {
               <Actions
                 {...{
                   params,
-                  editedRowID,
-                  setEditedRowID,
+                  editedRowIDs,
+                  setEditedRowIDs,
                   selectedRowID,
                   setSelectedRowID,
                   link,
-                  setDeletedRow,
+                  setModifiedRow,
                 }}
               />
             ),
@@ -253,12 +254,12 @@ const useColumns = (link, setDeletedRow) => {
               <Actions
                 {...{
                   params,
-                  editedRowID,
-                  setEditedRowID,
+                  editedRowIDs,
+                  setEditedRowIDs,
                   selectedRowID,
                   setSelectedRowID,
                   link,
-                  setDeletedRow,
+                  setModifiedRow,
                 }}
               />
             ),
@@ -291,12 +292,12 @@ const useColumns = (link, setDeletedRow) => {
               <Actions
                 {...{
                   params,
-                  editedRowID,
-                  setEditedRowID,
+                  editedRowIDs,
+                  setEditedRowIDs,
                   selectedRowID,
                   setSelectedRowID,
                   link,
-                  setDeletedRow,
+                  setModifiedRow,
                 }}
               />
             ),
@@ -366,12 +367,12 @@ const useColumns = (link, setDeletedRow) => {
               <Actions
                 {...{
                   params,
-                  editedRowID,
-                  setEditedRowID,
+                  editedRowIDs,
+                  setEditedRowIDs,
                   selectedRowID,
                   setSelectedRowID,
                   link,
-                  setDeletedRow,
+                  setModifiedRow,
                 }}
               />
             ),
@@ -431,12 +432,12 @@ const useColumns = (link, setDeletedRow) => {
               <Actions
                 {...{
                   params,
-                  editedRowID,
-                  setEditedRowID,
+                  editedRowIDs,
+                  setEditedRowIDs,
                   selectedRowID,
                   setSelectedRowID,
                   link,
-                  setDeletedRow,
+                  setModifiedRow,
                 }}
               />
             ),
@@ -504,12 +505,12 @@ const useColumns = (link, setDeletedRow) => {
               <Actions
                 {...{
                   params,
-                  editedRowID,
-                  setEditedRowID,
+                  editedRowIDs,
+                  setEditedRowIDs,
                   selectedRowID,
                   setSelectedRowID,
                   link,
-                  setDeletedRow,
+                  setModifiedRow,
                 }}
               />
             ),
@@ -563,12 +564,12 @@ const useColumns = (link, setDeletedRow) => {
               <Actions
                 {...{
                   params,
-                  editedRowID,
-                  setEditedRowID,
+                  editedRowIDs,
+                  setEditedRowIDs,
                   selectedRowID,
                   setSelectedRowID,
                   link,
-                  setDeletedRow,
+                  setModifiedRow,
                 }}
               />
             ),
@@ -577,9 +578,9 @@ const useColumns = (link, setDeletedRow) => {
           },
         ];
     }
-  }, [editedRowID, selectedRowID]);
+  }, [editedRowIDs, selectedRowID]);
 
-  return { columns, setEditedRowID, setSelectedRowID };
+  return { columns, setEditedRowIDs, setSelectedRowID };
 };
 
 export default useColumns;

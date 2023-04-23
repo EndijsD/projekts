@@ -191,7 +191,7 @@ CREATE TABLE IF NOT EXISTS `ERD`.`pasutijumi` (
   `pasutijumi_id` INT NOT NULL AUTO_INCREMENT,
   `id_lietotaji` INT NULL,
   `id_neregistreti_klienti` INT NULL,
-  `status` ENUM("Gaida apmaksu", "Sagatavo izsūtīšanai", "Izsūtīts", "Izpildīts") NOT NULL DEFAULT 'Gaida apmaksu',
+  `status` ENUM("Gaida apmaksu", "Sagatavo izsūtīšanai", "Izsūtīts", "Izpildīts", "Atcelts") NOT NULL DEFAULT 'Gaida apmaksu',
   `izveidosanas_datums` DATETIME NOT NULL DEFAULT NOW(),
   PRIMARY KEY (`pasutijumi_id`),
   CONSTRAINT `fk_pasutijumi_lietotaji1`

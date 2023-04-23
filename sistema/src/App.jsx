@@ -41,27 +41,39 @@ const fixedTheme = createTheme({
 
 const tableData = {
   orders: [
-    { title: 'Visi pasūtījumi', link: url + 'pasutijumi' },
+    { title: 'Visi pasūtījumi', link: url + 'pasutijumi', canAdd: false },
     {
       title: 'Pasūtījumu preču sasaistes tabula',
       link: url + 'pasutijumi_preces',
+      canAdd: false,
     },
   ],
   products: [
-    { title: 'Visas preces', link: url + 'preces' },
-    { title: 'Visas preču specifikācijas', link: url + 'precu_specifikacija' },
+    { title: 'Visas preces', link: url + 'preces', canAdd: true },
+    {
+      title: 'Visas preču specifikācijas',
+      link: url + 'precu_specifikacija',
+      canAdd: true,
+    },
     {
       title: 'Preču specifikāciju un īpašību sasaistes tabula',
       link: url + 'precu_specifikacija_ipasibas',
+      canAdd: true,
     },
-    { title: 'Visas īpašības', link: url + 'ipasibas' },
+    { title: 'Visas īpašības', link: url + 'ipasibas', canAdd: true },
   ],
   users: [
-    { title: 'Visi lietotāji', link: url + 'lietotaji' },
-    { title: 'Visi nereģistrētie klienti', link: url + 'neregistreti_klienti' },
-    { title: 'Visas adreses', link: url + 'adreses' },
+    { title: 'Visi lietotāji', link: url + 'lietotaji', canAdd: false },
+    {
+      title: 'Visi nereģistrētie klienti',
+      link: url + 'neregistreti_klienti',
+      canAdd: false,
+    },
+    { title: 'Visas adreses', link: url + 'adreses', canAdd: false },
   ],
-  reviews: [{ title: 'Visas atsauksmes', link: url + 'atsauksmes' }],
+  reviews: [
+    { title: 'Visas atsauksmes', link: url + 'atsauksmes', canAdd: false },
+  ],
 };
 
 function App() {

@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 
-const useFetch = (url, deletedRow) => {
+const useFetch = (url, modifiedRow) => {
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
+  const [initialLoad, setInitialLoad] = useState(true);
 
   useEffect(() => {
+    setIsPending(true);
     const abortController = new AbortController();
 
     fetch(url, { signal: abortController.signal })
@@ -20,20 +22,22 @@ const useFetch = (url, deletedRow) => {
         // setTimeout(() => {
         setData(data);
         setIsPending(false);
+        setInitialLoad(false);
         setError(null);
-        // }, 1000);
+        // }, 2000);
       })
       .catch((err) => {
         if (err.name !== 'AbortError') {
           setIsPending(false);
+          setInitialLoad(false);
           setError(err.message);
         }
       });
 
     return () => abortController.abort();
-  }, [url, deletedRow]);
+  }, [url, modifiedRow]);
 
-  return { data, isPending, error };
+  return { data, isPending, error, setData, initialLoad };
 };
 
 export default useFetch;

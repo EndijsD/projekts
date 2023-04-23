@@ -5,6 +5,8 @@
 ---
 Priekš sava gala eksāmena projekta esmu izlēmis izveidot ģitāru tirdzniecības interneta veikalu un tā administrēšanas sistēmu. Tiek veidota detalizēta dokumentācija un skatoties uz to ka tas ir interneta veikals arī datubāze. Jaunākās versijas visiem failiem ir pieejamas šajā GitHub repozitorijā.
 
+<br>
+
 ### *Izmantotās tehnoloģijas* 💻
 ---
 ##### Datubāze
@@ -20,12 +22,20 @@ Priekš sava gala eksāmena projekta esmu izlēmis izveidot ģitāru tirdzniecī
 - Git & GitHub
 - Visual Studio Code
 
+<br>
+
 ### *Kā palaist projektu* ❓
 ---
-1. Lejupielādēt sistēmu no GitHub
-2. Atvērt lejupielādēto mapi sevis izvēlētā komandrindas rīkā
-3. Ievadīt komandu "npm run dev"
-4. Atvērt uzrādīto saiti
+1. Lejupielādēt Node.js 18 LTS (citas versijas nav pārbaudītas) no [<img src="https://keenethics.com/wp-content/uploads/2021/08/Node.js_logo_2015-1-2.png" alt="Node.js Ikona" width="80">](https://nodejs.org "Node.js")
+2. Lejupielādēt sistēmu no GitHub
+3. Divas reizes atvērt lejupielādēto mapi sevis izvēlētā komandrindas rīkā
+4. Secībā izpildīt sekojošās komandas:
+    - Jebkurā logā izpildīt komandu `npm i`, lai instalētu vajadzīgās pakotnes
+    - Vienā logā izpildīt komandu `npm run devServer`, lai palaistu programmas servera pusi **(neaizvērt logu)**
+    - Otrā logā izpildīt komandu `npm run dev`, lai palaistu programmas klienta pusi **(neaizvērt logu)**
+5. Atvērt uzrādīto saiti
+
+<br>
 
 ### *Veicamie darbi* ✅
 ---
@@ -38,5 +48,4 @@ Priekš sava gala eksāmena projekta esmu izlēmis izveidot ģitāru tirdzniecī
   - Sadaļas - preču veidiem
   - "Par mums" lapa
 - Administrēšanas sistēma
-  - Galvenā lapa - datu kopskats
-  - Pārejās lapas - praktiski visas būs līdzīgas bet par citiem datiem
+  - Ielogošanās funkcija

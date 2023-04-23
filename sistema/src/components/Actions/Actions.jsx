@@ -1,24 +1,26 @@
-import { Box, CircularProgress, Fab } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { Check, Close, Delete, Save } from '@mui/icons-material';
+import { CircularProgress, Fab } from '@mui/material';
+import { useState } from 'react';
+import { Check, Close, Delete, Save, Cancel } from '@mui/icons-material';
 import { green, red } from '@mui/material/colors';
+import * as S from './style';
 
 const Actions = ({
   params,
-  editedRowID,
-  setEditedRowID,
+  editedRowIDs,
+  setEditedRowIDs,
   selectedRowID,
   setSelectedRowID,
   link,
-  setDeletedRow,
+  setModifiedRow,
 }) => {
   const [saveLoading, setSaveLoading] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [saveFailure, setSaveFailure] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
   const [deleteFailure, setDeleteFailure] = useState(false);
 
-  const handleEdit = async () => {
+  const handleEdit = () => {
     setSaveLoading(true);
 
     fetch(link + '/' + params.id, {
@@ -27,7 +29,7 @@ const Actions = ({
       body: JSON.stringify(params.row),
     }).then((res) => {
       setSaveLoading(false);
-      setEditedRowID(null);
+      setEditedRowIDs([]);
 
       if (!res.ok) {
         setSaveFailure(true);
@@ -37,6 +39,7 @@ const Actions = ({
         }, 1500);
       } else {
         setSaveSuccess(true);
+        setModifiedRow((prev) => !prev);
 
         setTimeout(() => {
           setSaveSuccess(false);
@@ -61,22 +64,58 @@ const Actions = ({
           setDeleteFailure(false);
         }, 1500);
       } else {
-        setDeletedRow(params.id);
+        setModifiedRow((prev) => !prev);
+        setDeleteSuccess(true);
       }
     });
   };
 
-  useEffect(() => {
-    if (editedRowID === params.id && saveSuccess) setSaveSuccess(false);
-  }, [editedRowID]);
+  const handleSave = () => {
+    setSaveLoading(true);
+    const entryWithoutID = Object.assign({}, params.row);
+
+    delete entryWithoutID[
+      Object.keys(entryWithoutID).filter((key) => key.includes('_id'))
+    ];
+    Object.keys(entryWithoutID).forEach((key) =>
+      entryWithoutID[key] == '' ? (entryWithoutID[key] = null) : false
+    );
+
+    fetch(link, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(entryWithoutID),
+    }).then((res) => {
+      setSaveLoading(false);
+      setEditedRowIDs([]);
+      setSelectedRowID(null);
+
+      if (!res.ok) {
+        setSaveFailure(true);
+
+        setTimeout(() => {
+          setSaveFailure(false);
+        }, 1500);
+      } else {
+        setModifiedRow((prev) => !prev);
+        setSaveSuccess(true);
+      }
+    });
+  };
+
+  const handleCancel = () => {
+    setEditedRowIDs([]);
+    setSelectedRowID(null);
+    setModifiedRow((prev) => !prev);
+    setDeleteSuccess(true);
+
+    setTimeout(() => {
+      setDeleteSuccess(false);
+    }, 1500);
+  };
 
   return (
-    <Box
-      sx={{
-        m: 1,
-        position: 'relative',
-      }}
-    >
+    <S.MUIBox>
       {saveFailure ? (
         <Fab
           color="primary"
@@ -108,8 +147,10 @@ const Actions = ({
             width: 40,
             height: 40,
           }}
-          disabled={params.id !== editedRowID || saveLoading || deleteLoading}
-          onClick={handleEdit}
+          disabled={
+            !editedRowIDs.includes(params.id) || saveLoading || deleteLoading
+          }
+          onClick={params.id == 'AUTO' ? handleSave : handleEdit}
         >
           <Save />
         </Fab>
@@ -139,6 +180,19 @@ const Actions = ({
         >
           <Close />
         </Fab>
+      ) : deleteSuccess ? (
+        <Fab
+          color="primary"
+          sx={{
+            marginLeft: 1,
+            width: 40,
+            height: 40,
+            bgcolor: green[500],
+            '&:hover': { bgcolor: green[700] },
+          }}
+        >
+          <Check />
+        </Fab>
       ) : (
         <Fab
           color="primary"
@@ -147,10 +201,23 @@ const Actions = ({
             width: 40,
             height: 40,
           }}
-          disabled={params.id !== selectedRowID || deleteLoading || saveLoading}
-          onClick={handleDelete}
+          disabled={
+            saveLoading ||
+            deleteLoading ||
+            deleteSuccess ||
+            (!editedRowIDs.includes(params.id) && params.id !== selectedRowID)
+          }
+          onClick={
+            editedRowIDs.includes(params.id) || params.id == 'AUTO'
+              ? handleCancel
+              : handleDelete
+          }
         >
-          <Delete />
+          {editedRowIDs.includes(params.id) || params.id == 'AUTO' ? (
+            <Cancel />
+          ) : (
+            <Delete />
+          )}
         </Fab>
       )}
       {deleteLoading && (
@@ -165,7 +232,7 @@ const Actions = ({
           }}
         />
       )}
-    </Box>
+    </S.MUIBox>
   );
 };
 
