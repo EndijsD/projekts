@@ -47,5 +47,3 @@ Priekš sava gala eksāmena projekta esmu izlēmis izveidot ģitāru tirdzniecī
   - Galvenā lapa
   - Sadaļas - preču veidiem
   - "Par mums" lapa
-- Administrēšanas sistēma
-  - Ielogošanās funkcija

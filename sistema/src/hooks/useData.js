@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { UPDATE_MODE } from '../redux/DataRedux';
+import { UPDATE_MODE, UPDATE_ADMIN } from '../redux/DataRedux';
 
 const useData = () => {
   const redux = useSelector((state) => state.DataRedux);
@@ -11,7 +11,11 @@ const useData = () => {
     dispatch(UPDATE_MODE(data));
   };
 
-  return { ...redux, changeMode };
+  const updateAdmin = (data) => {
+    dispatch(UPDATE_ADMIN(data));
+  };
+
+  return { ...redux, changeMode, updateAdmin };
 };
 
 export default useData;

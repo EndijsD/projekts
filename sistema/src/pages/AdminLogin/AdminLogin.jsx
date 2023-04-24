@@ -1,7 +1,10 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { IconButton, InputAdornment } from '@mui/material';
+import { CircularProgress, IconButton, InputAdornment } from '@mui/material';
 import { useState } from 'react';
 import * as S from './style';
+import url from '../../url';
+import useData from '../../hooks/useData';
+import { useNavigate } from 'react-router-dom';
 
 const initialValues = {
   email: '',
@@ -11,12 +14,47 @@ const initialValues = {
 const AdminLogin = () => {
   const [formValues, setFormValues] = useState(initialValues);
   const [showPassword, setShowPassword] = useState(false);
+  const { updateAdmin } = useData();
+  const [problem, setProblem] = useState(null);
+  const [isPending, setIsPending] = useState(false);
+  const nav = useNavigate();
 
   const handleClickShowPassword = () =>
     setShowPassword((showPassword) => !showPassword);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    setIsPending(true);
+
+    fetch(url + 'special/adminLogin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formValues),
+    }).then(async (res) => {
+      if (!res.ok) {
+        setIsPending(false);
+        setProblem('error');
+
+        setTimeout(() => {
+          setProblem(null);
+        }, 1500);
+      } else {
+        const data = await res.json();
+
+        if (data[0]) {
+          setProblem(null);
+          updateAdmin(data[0]);
+          nav('/admin/dashboard');
+        } else {
+          setIsPending(false);
+          setProblem('wrong');
+
+          setTimeout(() => {
+            setProblem(null);
+          }, 1500);
+        }
+      }
+    });
   };
 
   const handleFormInputChange = (e) => {
@@ -41,6 +79,8 @@ const AdminLogin = () => {
           value={formValues.email}
           onChange={handleFormInputChange}
           required
+          error={problem == 'wrong' && true}
+          autoComplete="true"
         />
 
         <S.textField
@@ -63,10 +103,17 @@ const AdminLogin = () => {
           value={formValues.password}
           onChange={handleFormInputChange}
           required
+          error={problem == 'wrong' && true}
+          autoComplete="true"
         />
 
-        <S.button variant="contained" type="submit">
-          Pievienoties
+        <S.button
+          variant="contained"
+          type="submit"
+          color={problem == 'error' && !isPending ? 'error' : 'primary'}
+          disabled={isPending}
+        >
+          {isPending ? <CircularProgress /> : <>Pievienoties</>}
         </S.button>
       </S.Form>
     </S.box>

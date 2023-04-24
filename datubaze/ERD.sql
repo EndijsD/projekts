@@ -296,7 +296,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `ERD`;
-INSERT INTO `ERD`.`administratori` (`administratori_id`, `vards`, `uzvards`, `epasts`, `parole`) VALUES (DEFAULT, 'Sofija', 'Freiberga', 'sofija.freiberga@inbox.lv', 'Parole1');
+INSERT INTO `ERD`.`administratori` (`administratori_id`, `vards`, `uzvards`, `epasts`, `parole`) VALUES (DEFAULT, 'Sofija', 'Freiberga', 'sofija.freiberga@inbox.lv', '$2b$10$Tz9/uyaY1sDFo/UGE1wCDubGtMFMHvaQIqOW9Od43J/hqpW268VeC');
 
 COMMIT;
 

@@ -7,7 +7,7 @@ export const box = styled(Box)`
   align-items: center;
   min-height: 100vh;
 
-  background: url('Admin/AdminLogin.jpg') no-repeat;
+  background: url('/Admin/AdminLogin.jpg') no-repeat;
   background-position: center;
   background-size: cover;
 `;
@@ -38,5 +38,4 @@ export const textField = styled(TextField)`
 export const button = styled(Button)`
   border-radius: 50px;
   font-weight: 700;
-  background: white;
 `;

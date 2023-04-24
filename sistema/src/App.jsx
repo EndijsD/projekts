@@ -13,6 +13,7 @@ import useData from './hooks/useData';
 import Dashboard from './pages/Dashboard';
 import Data from './pages/Data';
 import url from './url';
+import NotFound from './components/NotFound';
 
 function UserLayout() {
   return (
@@ -77,7 +78,7 @@ const tableData = {
 };
 
 function App() {
-  const { mode } = useData();
+  const { mode, admin } = useData();
 
   const theme = createTheme({
     palette: {
@@ -102,16 +103,25 @@ function App() {
               }
             />
 
-            <Route path="/admin" element={<AdminLayout />}>
-              <Route path="/admin/dashboard" element={<Dashboard />} />
-              {Object.keys(tableData).map((keys) => (
-                <Route
-                  key={keys}
-                  path={'/admin/' + keys}
-                  element={<Data about={tableData[keys]} />}
-                />
-              ))}
-            </Route>
+            {admin ? (
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route path="/admin/dashboard" element={<Dashboard />} />
+                {Object.keys(tableData).map((keys) => (
+                  <Route
+                    key={keys}
+                    path={'/admin/' + keys}
+                    element={<Data about={tableData[keys]} />}
+                  />
+                ))}
+              </Route>
+            ) : (
+              <Route
+                path="/admin/*"
+                element={
+                  <NotFound desc="Jums nav piekļuve administrācijas sistēmai" />
+                }
+              />
+            )}
           </Route>
         </Routes>
       </Router>

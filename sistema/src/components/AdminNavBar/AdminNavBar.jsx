@@ -26,10 +26,11 @@ function AdminNavBar() {
   const nav = useNavigate();
   const isAboveMedium = useMediaQuery((theme) => theme.breakpoints.up('md'));
   const theme = useTheme();
-  const { mode, changeMode } = useData();
+  const { mode, changeMode, updateAdmin } = useData();
 
   const logout = () => {
-    console.log('Logout');
+    updateAdmin(null);
+    nav('/admin');
   };
 
   const switchDrawer = () => {
