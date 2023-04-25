@@ -3,6 +3,10 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "engines": {
+    "node": "18.14.0",
+    "npm": "9.6.0"
+  },
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
