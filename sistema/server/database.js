@@ -5,6 +5,7 @@ const db = mysql.createConnection({
   host: 'containers-us-west-126.railway.app',
   password: 'BYEXxb7ZVPocb4H9XWkC',
   database: 'railway',
+  port: '5695',
 });
 
 db.connect((err) => {
