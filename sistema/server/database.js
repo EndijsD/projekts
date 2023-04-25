@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-dotenv.config({ path: './src/api/.env' });
+dotenv.config({ path: '.env' });
 import mysql from 'mysql2';
 
 const db = mysql.createConnection({

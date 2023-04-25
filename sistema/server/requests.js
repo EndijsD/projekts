@@ -1,5 +1,3 @@
-import dotenv from 'dotenv';
-dotenv.config({ path: './src/api/.env' });
 import express from 'express';
 const router = express.Router();
 import db from './database.js';
