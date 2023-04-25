@@ -2,9 +2,9 @@ import mysql from 'mysql2';
 
 const db = mysql.createConnection({
   user: 'root',
-  host: 'localhost',
-  password: 'Parole1',
-  database: 'erd',
+  host: 'containers-us-west-126.railway.app',
+  password: 'BYEXxb7ZVPocb4H9XWkC',
+  database: 'railway',
 });
 
 db.connect((err) => {
