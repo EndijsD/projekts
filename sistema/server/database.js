@@ -1,12 +1,10 @@
-import dotenv from 'dotenv';
-dotenv.config({ path: '.env' });
 import mysql from 'mysql2';
 
 const db = mysql.createConnection({
-  user: process.env.USER,
-  host: process.env.HOST,
-  password: process.env.PASSWORD,
-  database: process.env.DATABASE,
+  user: 'root',
+  host: 'localhost',
+  password: 'Parole1',
+  database: 'erd',
 });
 
 db.connect((err) => {
