@@ -26,7 +26,7 @@ Priekš sava gala eksāmena projekta esmu izlēmis izveidot ģitāru tirdzniecī
 
 ### *Kā palaist projektu* ❓
 ---
-1. Lejupielādēt Node.js 18 LTS (citas versijas nav pārbaudītas) no [<img src="https://keenethics.com/wp-content/uploads/2021/08/Node.js_logo_2015-1-2.png" alt="Node.js Ikona" width="80">](https://nodejs.org "Node.js")
+1. Lejupielādēt Node.js 18 LTS (citas versijas nav pārbaudītas) no [<img src="https://brandslogos.com/wp-content/uploads/thumbs/nodejs-logo-vector.svg" alt="Node.js Ikona" width="80">](https://nodejs.org "Node.js")
 2. Lejupielādēt sistēmu no GitHub
 3. Divas reizes atvērt lejupielādēto mapi sevis izvēlētā komandrindas rīkā
 4. Secībā izpildīt sekojošās komandas:
