@@ -1,11 +1,11 @@
 import mysql from 'mysql2';
 
 const db = mysql.createConnection({
-  user: 'root',
-  host: 'containers-us-west-126.railway.app',
-  password: 'BYEXxb7ZVPocb4H9XWkC',
-  database: 'railway',
-  port: '5695',
+  user: process.env.MYSQLUSER || 'root',
+  host: process.env.MYSQLHOST || 'localhost',
+  password: process.env.MYSQLPASSWORD || 'Parole1',
+  database: process.env.MYSQLDATABASE || 'erd',
+  port: process.env.MYSQLPORT || '3306',
 });
 
 db.connect((err) => {

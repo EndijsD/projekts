@@ -1,7 +1,14 @@
-const protocol = 'https';
-const ip = 'sistema-backend.up.railway.app';
-const port = '3001';
+const localProtocol = 'http';
+const localHostname = 'localhost';
+const localPort = '3001';
+const localURL = localProtocol + '://' + localHostname + ':' + localPort + '/';
 
-const url = protocol + '://' + ip + '/'; // ':' + port + '/';
+const liveProtocol = 'https';
+const liveHostname = 'system-server.up.railway.app';
+const liveURL = liveProtocol + '://' + liveHostname + '/';
+
+const useLocalServer = false;
+
+const url = useLocalServer ? localURL : liveURL;
 
 export default url;
