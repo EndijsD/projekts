@@ -41,9 +41,10 @@ const AdminLogin = () => {
       } else {
         const data = await res.json();
 
-        if (data[0]) {
+        if (data) {
           setProblem(null);
-          updateAdmin(data[0]);
+          localStorage.setItem('sessionID', data.sesija);
+          updateAdmin(data);
           nav('/admin/dashboard');
         } else {
           setIsPending(false);

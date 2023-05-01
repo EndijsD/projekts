@@ -8,12 +8,15 @@ import UserNavBar from './components/UserNavBar';
 import Footer from './components/Footer';
 import AdminLogin from './pages/AdminLogin';
 import AdminNavBar from './components/AdminNavBar';
-import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
+import { Box, createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import useData from './hooks/useData';
 import Dashboard from './pages/Dashboard';
 import Data from './pages/Data';
 import url from './url';
 import NotFound from './components/NotFound';
+import { useEffect } from 'react';
+import useFetch from './hooks/useFetch';
+import { HashLoader } from 'react-spinners';
 
 function UserLayout() {
   return (
@@ -78,7 +81,19 @@ const tableData = {
 };
 
 function App() {
-  const { mode, admin } = useData();
+  const { mode, admin, updateAdmin } = useData();
+
+  const { data, isPending } = useFetch(
+    url + `special/admin/:${localStorage.getItem('sessionID')}`
+  );
+
+  useEffect(() => {
+    if (!admin && localStorage.getItem('sessionID')) {
+      if (!isPending && data) {
+        updateAdmin(data);
+      }
+    }
+  }, [isPending, data]);
 
   const theme = createTheme({
     palette: {
@@ -103,7 +118,7 @@ function App() {
               }
             />
 
-            {admin ? (
+            {admin && (
               <Route path="/admin" element={<AdminLayout />}>
                 <Route path="/admin/dashboard" element={<Dashboard />} />
                 {Object.keys(tableData).map((keys) => (
@@ -114,11 +129,27 @@ function App() {
                   />
                 ))}
               </Route>
-            ) : (
+            )}
+            {!admin && (
               <Route
                 path="/admin/*"
                 element={
-                  <NotFound desc="Jums nav piekļuve administrācijas sistēmai" />
+                  localStorage.getItem('sessionID') && isPending ? (
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        flex: 1,
+                      }}
+                    >
+                      <HashLoader color={theme.palette.primary.main} />
+                    </Box>
+                  ) : (
+                    !data && (
+                      <NotFound desc="Jums nav piekļuve administrācijas sistēmai" />
+                    )
+                  )
                 }
               />
             )}

@@ -12,6 +12,7 @@ import * as S from './style';
 import { useNavigate } from 'react-router-dom';
 import { Menu, Brightness4, Brightness7 } from '@mui/icons-material';
 import useData from '../../hooks/useData';
+import url from '../../url';
 
 const pages = [
   { name: 'Māja', route: 'dashboard' },
@@ -29,6 +30,12 @@ function AdminNavBar() {
   const { mode, changeMode, updateAdmin } = useData();
 
   const logout = () => {
+    fetch(url + 'special/session', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sessionID: localStorage.getItem('sessionID') }),
+    });
+    localStorage.removeItem('sessionID');
     updateAdmin(null);
     nav('/admin');
   };

@@ -2,6 +2,7 @@ import express from 'express';
 const router = express.Router();
 import db from './database.js';
 import bcrypt from 'bcrypt';
+import { v4 } from 'uuid';
 
 router.get('/dashboard', async (req, res) => {
   const tableResults = {
@@ -38,14 +39,71 @@ router.post('/adminLogin', async (req, res) => {
       if (err) {
         res.status(500).json({ message: err.message });
       } else {
-        if (result[0]) {
-          const isCorrectPass = bcrypt.compareSync(password, result[0].parole);
+        const resultObj = result[0];
 
-          if (isCorrectPass) res.send(result);
-          else res.send([]);
+        if (resultObj) {
+          const isCorrectPass = bcrypt.compareSync(password, resultObj.parole);
+
+          if (isCorrectPass) {
+            const sessionID = v4();
+
+            setSession(sessionID, resultObj.administratori_id);
+            const resultWithSession = { ...resultObj, sesija: sessionID };
+            res.send(resultWithSession);
+          } else {
+            res.send(null);
+          }
         } else {
-          res.send([]);
+          res.send(null);
         }
+      }
+    }
+  );
+});
+
+const setSession = (sessionID, id) => {
+  db.query(
+    `UPDATE administratori SET sesija = ? WHERE administratori_id = ?`,
+    [sessionID, id],
+    (err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('Set session');
+      }
+    }
+  );
+};
+
+router.delete('/session', async (req, res) => {
+  const sessionID = req.body.sessionID;
+
+  db.query(
+    'SELECT * FROM administratori WHERE sesija=?',
+    sessionID,
+    (err, result) => {
+      if (err) {
+        res.status(500).json({ message: err.message });
+      } else {
+        const resultObj = result[0];
+
+        if (resultObj) setSession(null, resultObj.administratori_id);
+      }
+    }
+  );
+});
+
+router.get('/admin/:session', async (req, res) => {
+  const sessionID = req.params.session.slice(1);
+
+  db.query(
+    `SELECT * FROM administratori WHERE sesija = ?`,
+    sessionID,
+    (err, result) => {
+      if (err) {
+        res.status(500).json({ message: err.message });
+      } else {
+        res.json(result[0]);
       }
     }
   );
