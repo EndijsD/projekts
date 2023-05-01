@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS `ERD`.`administratori` (
   `uzvards` VARCHAR(45) NOT NULL,
   `epasts` VARCHAR(100) NOT NULL,
   `parole` VARCHAR(100) NOT NULL,
+  `sesija` VARCHAR(36) NULL,
   PRIMARY KEY (`administratori_id`))
 ENGINE = InnoDB;
 
@@ -296,7 +297,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `ERD`;
-INSERT INTO `ERD`.`administratori` (`administratori_id`, `vards`, `uzvards`, `epasts`, `parole`) VALUES (DEFAULT, 'Sofija', 'Freiberga', 'sofija.freiberga@inbox.lv', '$2b$10$Tz9/uyaY1sDFo/UGE1wCDubGtMFMHvaQIqOW9Od43J/hqpW268VeC');
+INSERT INTO `ERD`.`administratori` (`administratori_id`, `vards`, `uzvards`, `epasts`, `parole`, `sesija`) VALUES (DEFAULT, 'Sofija', 'Freiberga', 'sofija.freiberga@inbox.lv', 'Parole1', NULL);
 
 COMMIT;
 
