@@ -26,10 +26,10 @@ const AdminLogin = () => {
     e.preventDefault();
     setIsPending(true);
 
-    fetch(url + 'special/adminLogin', {
+    fetch(url + 'auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formValues),
+      body: JSON.stringify({ ...formValues, table: 'administratori' }),
     }).then(async (res) => {
       if (!res.ok) {
         setIsPending(false);
@@ -41,9 +41,10 @@ const AdminLogin = () => {
       } else {
         const data = await res.json();
 
-        if (data[0]) {
+        if (data) {
           setProblem(null);
-          updateAdmin(data[0]);
+          sessionStorage.setItem('token', data.accessToken);
+          updateAdmin(data.accessToken);
           nav('/admin/dashboard');
         } else {
           setIsPending(false);

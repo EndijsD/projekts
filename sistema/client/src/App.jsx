@@ -14,6 +14,7 @@ import Dashboard from './pages/Dashboard';
 import Data from './pages/Data';
 import url from './url';
 import NotFound from './components/NotFound';
+import { useEffect, useState } from 'react';
 
 function UserLayout() {
   return (
@@ -77,8 +78,24 @@ const tableData = {
   ],
 };
 
+const token = sessionStorage.getItem('token');
+
 function App() {
-  const { mode, admin } = useData();
+  const { mode, admin, updateAdmin } = useData();
+  const [isPending, setIsPending] = useState(token ? true : false);
+
+  useEffect(() => {
+    if (!admin && token) {
+      fetch(url + 'auth/verify', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((res) => {
+        if (res.ok) updateAdmin(token);
+        setIsPending(false);
+      });
+    }
+  }, []);
 
   const theme = createTheme({
     palette: {
@@ -118,7 +135,9 @@ function App() {
               <Route
                 path="/admin/*"
                 element={
-                  <NotFound desc="Jums nav piekļuve administrācijas sistēmai" />
+                  !isPending && (
+                    <NotFound desc="Jums nav piekļuve administrācijas sistēmai" />
+                  )
                 }
               />
             )}
