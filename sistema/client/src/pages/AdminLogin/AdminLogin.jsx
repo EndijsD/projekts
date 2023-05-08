@@ -43,7 +43,7 @@ const AdminLogin = () => {
 
         if (data) {
           setProblem(null);
-          sessionStorage.setItem('token', data.accessToken);
+          sessionStorage.setItem('admin_token', data.accessToken);
           updateAdmin(data.accessToken);
           nav('/admin/dashboard');
         } else {

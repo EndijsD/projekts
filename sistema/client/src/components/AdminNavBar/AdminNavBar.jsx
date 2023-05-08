@@ -30,7 +30,7 @@ function AdminNavBar() {
 
   const logout = () => {
     updateAdmin(null);
-    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('admin_token');
     nav('/admin');
   };
 

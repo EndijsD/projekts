@@ -5,7 +5,7 @@ import {
   Outlet,
 } from 'react-router-dom';
 import UserNavBar from './components/UserNavBar';
-import Footer from './components/Footer';
+import UserFooter from './components/UserFooter';
 import AdminLogin from './pages/AdminLogin';
 import AdminNavBar from './components/AdminNavBar';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
@@ -15,13 +15,14 @@ import Data from './pages/Data';
 import url from './url';
 import NotFound from './components/NotFound';
 import { useEffect, useState } from 'react';
+import Main from './pages/Main';
 
 function UserLayout() {
   return (
     <>
       <UserNavBar />
       <Outlet />
-      <Footer />
+      <UserFooter />
     </>
   );
 }
@@ -108,7 +109,9 @@ function App() {
       <CssBaseline />
       <Router>
         <Routes>
-          <Route path="/" element={<UserLayout />}></Route>
+          <Route path="/" element={<UserLayout />}>
+            <Route index element={<Main />} />
+          </Route>
 
           <Route path="/admin">
             <Route

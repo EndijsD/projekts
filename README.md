@@ -40,10 +40,11 @@ Priekš sava gala eksāmena projekta esmu izlēmis izveidot ģitāru tirdzniecī
 ### *Veicamie darbi* ✅
 ---
 - Interneta veikals
-  - Galvene
-  - Kājene
+  - Galvene (Meklēšanas funkcionalitāte)
+  - Autorizēšanās un reģistrēšanās lapas
   - Grozs
   - Maksāšanas forma
   - Galvenā lapa
   - Sadaļas - preču veidiem
   - "Par mums" lapa
+  - Pasūtījumu lapa
