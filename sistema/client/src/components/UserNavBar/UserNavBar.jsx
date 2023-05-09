@@ -24,8 +24,8 @@ import useData from '../../hooks/useData';
 function UserNavBar() {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [settings, setSettings] = useState([
-    { name: 'Autorizēties', route: 'login' },
-    { name: 'Reģistrēties', route: 'register' },
+    { name: 'Autorizēties', route: '/login' },
+    { name: 'Reģistrēties', route: '/register' },
   ]);
   const nav = useNavigate();
   const theme = useTheme();
@@ -43,7 +43,7 @@ function UserNavBar() {
   const logout = () => {
     handleCloseUserMenu();
     updateUser(null);
-    sessionStorage.removeItem('user_token');
+    localStorage.removeItem('user_token');
     nav('/login');
   };
 
@@ -54,14 +54,14 @@ function UserNavBar() {
   useEffect(() => {
     if (user) {
       setSettings([
-        { name: 'Profils', route: 'profile' },
-        { name: 'Pasūtījumi', route: 'orders' },
+        { name: 'Profils', route: '/profile' },
+        { name: 'Pasūtījumi', route: '/orders' },
         { name: 'Iziet' },
       ]);
     } else {
       setSettings([
-        { name: 'Autorizēties', route: 'login' },
-        { name: 'Reģistrēties', route: 'register' },
+        { name: 'Autorizēties', route: '/login' },
+        { name: 'Reģistrēties', route: '/register' },
       ]);
     }
   }, [user]);

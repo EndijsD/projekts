@@ -50,7 +50,7 @@ const Footer = () => {
           sx={{
             color: theme.palette.common.white,
           }}
-          onClick={() => nav('about-us')}
+          onClick={() => nav('/about-us')}
         >
           Par Mums
         </Button>

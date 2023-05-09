@@ -296,7 +296,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `ERD`;
-INSERT INTO `ERD`.`administratori` (`administratori_id`, `vards`, `uzvards`, `epasts`, `parole`) VALUES (DEFAULT, 'Sofija', 'Freiberga', 'sofija.freiberga@inbox.lv', '$2b$10$Tz9/uyaY1sDFo/UGE1wCDubGtMFMHvaQIqOW9Od43J/hqpW268VeC');
+INSERT INTO `ERD`.`administratori` (`administratori_id`, `vards`, `uzvards`, `epasts`, `parole`) VALUES (DEFAULT, 'Sofija', 'Freiberga', 'sofija.freiberga@inbox.lv', 'Parole1');
 
 COMMIT;
 
@@ -317,7 +317,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `ERD`;
-INSERT INTO `ERD`.`lietotaji` (`lietotaji_id`, `vards`, `uzvards`, `talrunis`, `epasts`, `parole`, `izveidosanas_datums`, `id_adreses`) VALUES (DEFAULT, 'Tālis', 'Jēgers', '38515913', 'talis.jegers@inbox.lv', 'Parole1', DEFAULT, 1);
+INSERT INTO `ERD`.`lietotaji` (`lietotaji_id`, `vards`, `uzvards`, `talrunis`, `epasts`, `parole`, `izveidosanas_datums`, `id_adreses`) VALUES (DEFAULT, 'Tālis', 'Jēgers', '38515913', 'talis.jegers@inbox.lv', '$2b$10$/78jsfmT7cWAdFb1dI90/Oa3et.1GfcvWCDkzsGK.N6Lq0RD0LchK', DEFAULT, 1);
 
 COMMIT;
 

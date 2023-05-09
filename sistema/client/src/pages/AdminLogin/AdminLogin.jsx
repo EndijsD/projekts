@@ -41,7 +41,7 @@ const AdminLogin = () => {
       } else {
         const data = await res.json();
 
-        if (data) {
+        if (Object.keys(data).length) {
           setProblem(null);
           sessionStorage.setItem('admin_token', data.accessToken);
           updateAdmin(data.accessToken);

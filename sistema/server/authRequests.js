@@ -27,10 +27,10 @@ router.post('/login', async (req, res) => {
           );
           res.send({ accessToken: accessToken });
         } else {
-          res.send(null);
+          res.send({});
         }
       } else {
-        res.send(null);
+        res.send({});
       }
     }
   });

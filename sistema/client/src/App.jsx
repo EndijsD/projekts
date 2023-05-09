@@ -16,6 +16,7 @@ import url from './url';
 import NotFound from './components/NotFound';
 import { useEffect, useState } from 'react';
 import Main from './pages/Main';
+import UserLogin from './pages/UserLogin/UserLogin';
 
 function UserLayout() {
   return (
@@ -111,6 +112,7 @@ function App() {
         <Routes>
           <Route path="/" element={<UserLayout />}>
             <Route index element={<Main />} />
+            <Route path="login" element={<UserLogin />} />
           </Route>
 
           <Route path="/admin">
