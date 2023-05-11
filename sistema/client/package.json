@@ -15,7 +15,6 @@
     "@mui/material": "^5.11.12",
     "@mui/x-data-grid": "^6.0.4",
     "@reduxjs/toolkit": "^1.9.3",
-    "bcrypt": "^5.1.0",
     "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

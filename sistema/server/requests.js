@@ -2,6 +2,7 @@ import express from 'express';
 const router = express.Router();
 import db from './database.js';
 import moment from 'moment';
+import bcrypt from 'bcrypt';
 
 router.get('/', async (req, res) => {
   const table = req.baseUrl.slice(1);
@@ -34,16 +35,24 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   const table = req.baseUrl.slice(1);
+  if (req.body.parole) {
+    req.body.parole = bcrypt.hashSync(req.body.parole, 10);
+  }
+
   const keys = Object.keys(req.body).toString();
   const values = Object.values(req.body);
 
-  db.query(`INSERT INTO ${table} (${keys}) VALUES (?)`, [values], (err) => {
-    if (err) {
-      res.status(500).json({ message: err.message });
-    } else {
-      res.json({ message: 'Added entry' });
+  db.query(
+    `INSERT INTO ${table} (${keys}) VALUES (?)`,
+    [values],
+    (err, result) => {
+      if (err) {
+        res.status(500).json({ message: err.message });
+      } else {
+        res.json({ message: 'Added entry', id: result.insertId });
+      }
     }
-  });
+  );
 });
 
 router.patch('/:id', async (req, res) => {

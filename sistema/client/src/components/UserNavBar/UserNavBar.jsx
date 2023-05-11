@@ -24,8 +24,8 @@ import useData from '../../hooks/useData';
 function UserNavBar() {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [settings, setSettings] = useState([
-    { name: 'Autorizēties', route: '/login' },
-    { name: 'Reģistrēties', route: '/register' },
+    { name: 'Autorizēties', route: 'login' },
+    { name: 'Reģistrēties', route: 'register' },
   ]);
   const nav = useNavigate();
   const theme = useTheme();
@@ -41,7 +41,6 @@ function UserNavBar() {
   };
 
   const logout = () => {
-    handleCloseUserMenu();
     updateUser(null);
     localStorage.removeItem('user_token');
     nav('/login');
@@ -54,14 +53,14 @@ function UserNavBar() {
   useEffect(() => {
     if (user) {
       setSettings([
-        { name: 'Profils', route: '/profile' },
-        { name: 'Pasūtījumi', route: '/orders' },
+        { name: 'Profils', route: 'profile' },
+        { name: 'Pasūtījumi', route: 'orders' },
         { name: 'Iziet' },
       ]);
     } else {
       setSettings([
-        { name: 'Autorizēties', route: '/login' },
-        { name: 'Reģistrēties', route: '/register' },
+        { name: 'Autorizēties', route: 'login' },
+        { name: 'Reģistrēties', route: 'register' },
       ]);
     }
   }, [user]);
@@ -69,6 +68,15 @@ function UserNavBar() {
   useEffect(() => {
     // console.log(searchText);
   }, [searchText]);
+
+  const navigate = (route) => {
+    if (route) {
+      nav('/' + route);
+    } else {
+      logout();
+    }
+    handleCloseUserMenu();
+  };
 
   return (
     <AppBar position="static">
@@ -117,7 +125,10 @@ function UserNavBar() {
               )}
             </S.WhiteIconButton>
 
-            <S.WhiteIconButton onMouseEnter={handleOpenUserMenu}>
+            <S.WhiteIconButton
+              sx={{ cursor: 'default' }}
+              onMouseEnter={handleOpenUserMenu}
+            >
               {user ? <Person /> : <PersonOutline />}
             </S.WhiteIconButton>
 
@@ -139,7 +150,7 @@ function UserNavBar() {
               {settings.map((setting) => (
                 <MenuItem
                   key={setting.name}
-                  onClick={setting.route ? () => nav(setting.route) : logout}
+                  onClick={() => navigate(setting.route)}
                 >
                   <Typography>{setting.name}</Typography>
                 </MenuItem>
@@ -182,8 +193,11 @@ function UserNavBar() {
                 )}
               </S.WhiteIconButton>
 
-              <S.WhiteIconButton onMouseEnter={handleOpenUserMenu}>
-                <Person />
+              <S.WhiteIconButton
+                sx={{ cursor: 'default' }}
+                onMouseEnter={handleOpenUserMenu}
+              >
+                {user ? <Person /> : <PersonOutline />}
               </S.WhiteIconButton>
 
               <Menu
@@ -204,7 +218,7 @@ function UserNavBar() {
                 {settings.map((setting) => (
                   <MenuItem
                     key={setting.name}
-                    onClick={setting.route ? () => nav(setting.route) : logout}
+                    onClick={() => navigate(setting.route)}
                   >
                     <Typography>{setting.name}</Typography>
                   </MenuItem>

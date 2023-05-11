@@ -14,7 +14,7 @@ export const LoginBox = styled(Box)(({ theme }) => ({
   boxShadow:
     theme.palette.mode == 'light'
       ? `0px 0px 10px ${theme.palette.grey[500]}`
-      : `0px 0px 10px black`,
+      : `0px 0px 10px ${theme.palette.grey[900]}`,
   borderRadius: 20,
 
   [theme.breakpoints.down('sm')]: {
@@ -47,12 +47,13 @@ export const Form = styled('form')(({ theme }) => ({
   },
 }));
 
-export const h1 = styled(Typography)`
-  font-size: 2em;
-  font-weight: 800;
-  text-align: center;
-  margin-bottom: 1rem;
-`;
+export const h1 = styled(Typography)(({ theme }) => ({
+  fontSize: '2rem',
+  fontWeight: 800,
+  textAlign: 'center',
+  marginBottom: '1rem',
+  color: theme.palette.mode == 'light' && theme.palette.grey[800],
+}));
 
 export const textField = styled(TextField)`
   margin-bottom: 2rem;
