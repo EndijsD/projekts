@@ -27,13 +27,18 @@ Priekš sava gala eksāmena projekta esmu izlēmis izveidot ģitāru tirdzniecī
 ### *Kā palaist projektu* ❓
 ---
 1. Lejupielādēt Node.js 18 LTS (citas versijas nav pārbaudītas) no [<img src="https://brandslogos.com/wp-content/uploads/thumbs/nodejs-logo-vector.svg" alt="Node.js Ikona" width="80">](https://nodejs.org "Node.js")
-2. Lejupielādēt sistēmu no GitHub
+2. Lejupielādēt "sistema" mapi no GitHub
 3. Divas reizes atvērt lejupielādēto mapi sevis izvēlētā komandrindas rīkā
 4. Secībā izpildīt sekojošās komandas:
-    - Jebkurā logā izpildīt komandu `npm i`, lai instalētu vajadzīgās pakotnes
-    - Vienā logā izpildīt komandu `npm run devServer`, lai palaistu programmas servera pusi **(neaizvērt logu)**
-    - Otrā logā izpildīt komandu `npm run dev`, lai palaistu programmas klienta pusi **(neaizvērt logu)**
-5. Atvērt uzrādīto saiti
+    - Vienā logā veikt sekojošo:
+        - Izpildīt komandu `cd server`, lai ieietu sistēmas servera puses mapē
+        - Izpildīt komandu `npm i`, lai instalētu vajadzīgās pakotnes
+        - Izpildīt komandu `npm run dev`, lai palaistu sistēmas servera pusi **(neaizvērt logu)**
+    - Otrā logā veikt sekojošo:
+        - Izpildīt komandu `cd client`, lai ieietu sistēmas mājaslapas puses mapē
+        - Izpildīt komandu `npm i`, lai instalētu vajadzīgās pakotnes
+        - Izpildīt komandu `npm run dev`, lai palaistu programmas mājaslapas pusi **(neaizvērt logu)**
+5. Pēc pēdējās kommandas veikšanas atvērt uzrādīto saiti
 
 <br>
 
@@ -43,7 +48,6 @@ Priekš sava gala eksāmena projekta esmu izlēmis izveidot ģitāru tirdzniecī
   - Galvene (Meklēšanas funkcionalitāte)
   - Grozs
   - Maksāšanas forma
-  - Galvenā lapa
   - Sadaļas - preču veidiem
   - "Par mums" lapa
   - Pasūtījumu lapa

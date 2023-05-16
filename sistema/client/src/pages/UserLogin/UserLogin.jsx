@@ -137,7 +137,7 @@ const UserLogin = () => {
             </Button>
           </S.Form>
         </S.StyledPaper>
-        <S.StyledImg src="/User/login_screen_guitar.jpg" alt="Ģitāras attēls" />
+        <S.StyledImg src="/User/Common/login_screen.jpg" alt="Ģitāras attēls" />
       </S.LoginBox>
     </S.box>
   );

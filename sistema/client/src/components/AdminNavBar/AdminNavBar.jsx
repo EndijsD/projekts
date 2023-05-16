@@ -14,7 +14,7 @@ import { Menu, Brightness4, Brightness7 } from '@mui/icons-material';
 import useData from '../../hooks/useData';
 
 const pages = [
-  { name: 'Māja', route: 'dashboard' },
+  { name: 'Pārskats', route: 'dashboard' },
   { name: 'Pasūtījumi', route: 'orders' },
   { name: 'Preces', route: 'products' },
   { name: 'Lietotāji', route: 'users' },

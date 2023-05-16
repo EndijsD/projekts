@@ -46,7 +46,7 @@ const useColumns = (link, setModifiedRow) => {
             field: 'izveidosanas_datums',
             headerName: 'Izveidošanas datums',
             minWidth: 160,
-            valueFormatter: (params) =>
+            valueGetter: (params) =>
               moment(params.value).format('YYYY-MM-DD HH:mm:ss'),
             flex: 1,
           },
@@ -132,13 +132,14 @@ const useColumns = (link, setModifiedRow) => {
             headerName: 'Nosaukums',
             editable: true,
             minWidth: 200,
-            flex: 1,
+            flex: 3,
           },
           {
             field: 'cena',
             headerName: 'Cena',
             editable: true,
             minWidth: 100,
+            valueFormatter: (params) => params.value + ' €',
             flex: 1,
           },
           {
@@ -147,6 +148,22 @@ const useColumns = (link, setModifiedRow) => {
             type: 'number',
             editable: true,
             minWidth: 100,
+            flex: 1,
+          },
+          {
+            field: 'attelu_celi',
+            headerName: 'Attēlu ceļi',
+            editable: true,
+            minWidth: 100,
+            valueGetter: (params) => JSON.stringify(params.value),
+            flex: 2,
+          },
+          {
+            field: 'pievienosanas_datums',
+            headerName: 'Pievienošanas datums',
+            minWidth: 160,
+            valueGetter: (params) =>
+              moment(params.value).format('YYYY-MM-DD HH:mm:ss'),
             flex: 1,
           },
           {
@@ -208,81 +225,12 @@ const useColumns = (link, setModifiedRow) => {
             flex: 1,
           },
           {
-            field: 'actions',
-            headerName: 'Darbības',
-            type: 'actions',
-            renderCell: (params) => (
-              <Actions
-                {...{
-                  params,
-                  editedRowIDs,
-                  setEditedRowIDs,
-                  selectedRowID,
-                  setSelectedRowID,
-                  link,
-                  setModifiedRow,
-                }}
-              />
-            ),
-            minWidth: 100,
-            flex: 1,
-          },
-        ];
-      case 'precu_specifikacija_ipasibas':
-        return [
-          {
-            field: 'id_precu_specifikacija',
-            headerName: 'Preču specifikācijas ID',
-            type: 'number',
-            editable: true,
-            minWidth: 160,
-            flex: 1,
-          },
-          {
-            field: 'id_ipasibas',
-            headerName: 'Īpašības ID',
-            type: 'number',
+            field: 'ipasibas',
+            headerName: 'Īpašības',
             editable: true,
             minWidth: 100,
-            flex: 1,
-          },
-          {
-            field: 'actions',
-            headerName: 'Darbības',
-            type: 'actions',
-            renderCell: (params) => (
-              <Actions
-                {...{
-                  params,
-                  editedRowIDs,
-                  setEditedRowIDs,
-                  selectedRowID,
-                  setSelectedRowID,
-                  link,
-                  setModifiedRow,
-                }}
-              />
-            ),
-            minWidth: 100,
-            flex: 1,
-          },
-        ];
-      case 'ipasibas':
-        return [
-          { field: 'ipasibas_id', headerName: 'ID', minWidth: 70, flex: 1 },
-          {
-            field: 'nosaukums',
-            headerName: 'Nosaukums',
-            editable: true,
-            minWidth: 200,
-            flex: 1,
-          },
-          {
-            field: 'vertiba',
-            headerName: 'Vērtība',
-            editable: true,
-            minWidth: 100,
-            flex: 1,
+            valueGetter: (params) => JSON.stringify(params.value),
+            flex: 3,
           },
           {
             field: 'actions',
@@ -334,7 +282,7 @@ const useColumns = (link, setModifiedRow) => {
             headerName: 'E-pasts',
             editable: true,
             minWidth: 160,
-            flex: 1,
+            flex: 3,
           },
           {
             field: 'parole',
@@ -347,7 +295,7 @@ const useColumns = (link, setModifiedRow) => {
             field: 'izveidosanas_datums',
             headerName: 'Izveidošanas datums',
             minWidth: 160,
-            valueFormatter: (params) =>
+            valueGetter: (params) =>
               moment(params.value).format('YYYY-MM-DD HH:mm:ss'),
             flex: 1,
           },
@@ -414,7 +362,7 @@ const useColumns = (link, setModifiedRow) => {
             headerName: 'E-pasts',
             editable: true,
             minWidth: 160,
-            flex: 1,
+            flex: 2,
           },
           {
             field: 'id_adreses',
@@ -467,14 +415,14 @@ const useColumns = (link, setModifiedRow) => {
             headerName: 'Novads',
             editable: true,
             minWidth: 100,
-            flex: 1,
+            flex: 2,
           },
           {
             field: 'pagasts',
             headerName: 'Pagasts',
             editable: true,
             minWidth: 100,
-            flex: 1,
+            flex: 2,
           },
           {
             field: 'iela',
@@ -525,7 +473,7 @@ const useColumns = (link, setModifiedRow) => {
             field: 'izveidosanas_datums',
             headerName: 'Izveidošanas datums',
             minWidth: 160,
-            valueFormatter: (params) =>
+            valueGetter: (params) =>
               moment(params.value).format('YYYY-MM-DD HH:mm:ss'),
             flex: 1,
           },
@@ -540,7 +488,7 @@ const useColumns = (link, setModifiedRow) => {
             field: 'komentars',
             headerName: 'Komentārs',
             minWidth: 200,
-            flex: 1,
+            flex: 3,
           },
           {
             field: 'id_preces',

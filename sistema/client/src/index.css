@@ -8,3 +8,10 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+:root {
+  --star-top: 'auto';
+  --star-left: 'auto';
+  --mouse-x: 0;
+  --mouse-y: 0;
+}

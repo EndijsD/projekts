@@ -26,4 +26,34 @@ function hasNull(target) {
   return false;
 }
 
+router.get('/popular/:amount', async (req, res) => {
+  const amount = req.params.amount;
+
+  db.query(
+    `select count(id_preces) as times, id_preces from pasutijumi_preces group by id_preces order by times desc limit ${amount}`,
+    (err, result) => {
+      if (err) {
+        res.status(500).json({ message: err.message });
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+router.get('/newest/:amount', async (req, res) => {
+  const amount = req.params.amount;
+
+  db.query(
+    `select * from preces order by pievienosanas_datums desc limit ${amount}`,
+    (err, result) => {
+      if (err) {
+        res.status(500).json({ message: err.message });
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 export default router;

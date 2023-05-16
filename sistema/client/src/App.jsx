@@ -60,12 +60,6 @@ const tableData = {
       link: url + 'precu_specifikacija',
       canAdd: true,
     },
-    {
-      title: 'Preču specifikāciju un īpašību sasaistes tabula',
-      link: url + 'precu_specifikacija_ipasibas',
-      canAdd: true,
-    },
-    { title: 'Visas īpašības', link: url + 'ipasibas', canAdd: true },
   ],
   users: [
     { title: 'Visi lietotāji', link: url + 'lietotaji', canAdd: false },
@@ -81,7 +75,7 @@ const tableData = {
   ],
 };
 
-const token = sessionStorage.getItem('token');
+const token = sessionStorage.getItem('admin_token');
 
 function App() {
   const { mode, admin, updateAdmin } = useData();

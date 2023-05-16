@@ -1,6 +1,10 @@
 import { styled } from '@mui/system';
-import { Box } from '@mui/material';
+import { Container } from '@mui/material';
 
-export const StyledBox = styled(Box)`
+export const StyledContainer = styled(Container)`
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
   flex: 1;
+  margin: 2rem auto;
 `;
