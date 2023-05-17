@@ -16,8 +16,9 @@ import url from './url';
 import NotFound from './components/NotFound';
 import { useEffect, useState } from 'react';
 import Main from './pages/Main';
-import UserLogin from './pages/UserLogin/UserLogin';
+import UserLogin from './pages/UserLogin';
 import UserRegister from './pages/UserRegister';
+import Categories from './pages/Categories';
 
 function UserLayout() {
   return (
@@ -109,6 +110,7 @@ function App() {
             <Route index element={<Main />} />
             <Route path="login" element={<UserLogin />} />
             <Route path="register" element={<UserRegister />} />
+            <Route path="categories" element={<Categories />} />
           </Route>
 
           <Route path="/admin">

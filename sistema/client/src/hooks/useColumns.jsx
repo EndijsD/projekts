@@ -206,6 +206,14 @@ const useColumns = (link, setModifiedRow) => {
           {
             field: 'kategorija',
             headerName: 'Kategorija',
+            type: 'singleSelect',
+            valueOptions: [
+              'Klasiskās ģitāras',
+              'Akustiskās ģitāras',
+              'Elektriskās ģitāras',
+              'Basģitāras',
+              'Ukuleles',
+            ],
             editable: true,
             minWidth: 100,
             flex: 1,
