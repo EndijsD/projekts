@@ -1,5 +1,5 @@
 import { styled } from '@mui/system';
-import { Box, Button, Card, CardContent, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent } from '@mui/material';
 
 export const MainBox = styled(Box)({
   flex: 1,
@@ -9,7 +9,7 @@ export const MainBox = styled(Box)({
 
 export const CardTrack = styled(Box)({
   display: 'flex',
-  gap: '4vmin',
+  gap: '2.3rem',
   position: 'absolute',
   left: '50%',
   top: '50%',
@@ -17,35 +17,24 @@ export const CardTrack = styled(Box)({
   userSelect: 'none',
 });
 
-export const StyledCard = styled(Card)({
-  width: '40vmin',
-  height: '56vmin',
+export const StyledCard = styled(Card)(({ theme }) => ({
+  width: '22.7rem',
+  height: '31.8rem',
   backgroundSize: 'cover',
   backgroundPosition: '100% center',
 
-  '&:hover .title': {
-    display: 'none',
+  [theme.breakpoints.down(400)]: {
+    width: '17.7rem',
+    height: '26.8rem',
   },
-  '&:hover .button': {
-    display: 'block',
-  },
-});
+}));
 
 export const StyledCardContent = styled(CardContent)({
   display: 'flex',
   flexDirection: 'column',
 });
 
-export const Title = styled(Typography)(({ theme }) => ({
-  borderRadius: theme.shape.borderRadius,
-  fontSize: '1.5rem',
-  background: 'rgba(0, 0, 0, 0.3)',
-  padding: '1rem',
-  color: 'white',
-}));
-
-export const StyledButton = styled(Button)(({ theme }) => ({
-  display: 'none',
+export const StyledButton = styled(Button)({
   padding: '1rem',
   fontSize: '1.2rem',
   color: 'white',
@@ -54,4 +43,4 @@ export const StyledButton = styled(Button)(({ theme }) => ({
   '&:hover': {
     background: 'rgba(0, 0, 0, 0.5)',
   },
-}));
+});

@@ -56,4 +56,20 @@ router.get('/newest/:amount', async (req, res) => {
   );
 });
 
+router.post('/category', async (req, res) => {
+  const title = req.body.title;
+
+  db.query(
+    `select preces_id, nosaukums, cena, attelu_celi from preces inner join precu_specifikacija on preces.id_precu_specifikacija = precu_specifikacija.precu_specifikacija_id where kategorija = ?`,
+    title,
+    (err, result) => {
+      if (err) {
+        res.status(500).json({ message: err.message });
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 export default router;

@@ -19,6 +19,7 @@ import Main from './pages/Main';
 import UserLogin from './pages/UserLogin';
 import UserRegister from './pages/UserRegister';
 import Categories from './pages/Categories';
+import Category from './pages/Category';
 
 function UserLayout() {
   return (
@@ -78,6 +79,34 @@ const tableData = {
 
 const token = sessionStorage.getItem('admin_token');
 
+const categoryData = [
+  {
+    title: 'Klasiskās ģitāras',
+    link: 'classical',
+    image: '/User/Categories/Common/classical.jpg',
+  },
+  {
+    title: 'Akustiskās ģitāras',
+    link: 'acoustic',
+    image: '/User/Categories/Common/acoustic.jpg',
+  },
+  {
+    title: 'Elektriskās ģitāras',
+    link: 'electric',
+    image: '/User/Categories/Common/electric.jpg',
+  },
+  {
+    title: 'Basģitāras',
+    link: 'bass',
+    image: '/User/Categories/Common/bass.jpg',
+  },
+  {
+    title: 'Ukuleles',
+    link: 'ukuleles',
+    image: '/User/Categories/Common/ukulele.jpg',
+  },
+];
+
 function App() {
   const { mode, admin, updateAdmin } = useData();
   const [isPending, setIsPending] = useState(token ? true : false);
@@ -110,7 +139,17 @@ function App() {
             <Route index element={<Main />} />
             <Route path="login" element={<UserLogin />} />
             <Route path="register" element={<UserRegister />} />
-            <Route path="categories" element={<Categories />} />
+            <Route
+              path="categories"
+              element={<Categories categoryData={categoryData} />}
+            />
+            {categoryData.map((obj) => (
+              <Route
+                key={obj.link}
+                path={obj.link}
+                element={<Category title={obj.title} />}
+              />
+            ))}
           </Route>
 
           <Route path="/admin">

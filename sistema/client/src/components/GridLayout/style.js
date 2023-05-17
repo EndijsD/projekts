@@ -57,6 +57,7 @@ export const StyledCard = styled(Card)(({ theme }) => ({
   position: 'relative',
   cursor: 'pointer',
   padding: 1,
+  height: '100%',
 
   '&:hover .buyButton': {
     display: 'inline-flex',
@@ -75,7 +76,6 @@ export const StyledCard = styled(Card)(({ theme }) => ({
     left: 0,
     top: 0,
     position: 'absolute',
-    zIndex: 1,
     height: '100%',
     width: '100%',
     opacity: 0,
@@ -95,8 +95,9 @@ export const StyledCardMedia = styled(CardMedia)(({ theme }) => ({
 export const StyledCardContent = styled(CardContent)(({ theme }) => ({
   background: theme.palette.background.paper,
   borderRadius: 'inherit',
-  zIndex: 2,
+  zIndex: 1,
   position: 'relative',
+  height: '100%',
 
   '&:last-child': { paddingBottom: 16 },
 
