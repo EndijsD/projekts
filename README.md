@@ -48,6 +48,5 @@ Priekš sava gala eksāmena projekta esmu izlēmis izveidot ģitāru tirdzniecī
   - Galvene (Meklēšanas funkcionalitāte)
   - Grozs
   - Maksāšanas forma
-  - Sadaļas - preču veidiem
   - "Par mums" lapa
   - Pasūtījumu lapa

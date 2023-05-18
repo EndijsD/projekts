@@ -72,4 +72,20 @@ router.post('/category', async (req, res) => {
   );
 });
 
+router.get('/prece/:id', async (req, res) => {
+  const id = req.params.id;
+
+  db.query(
+    `select * from preces inner join precu_specifikacija on preces.id_precu_specifikacija = precu_specifikacija.precu_specifikacija_id where preces_id = ?`,
+    id,
+    (err, result) => {
+      if (err) {
+        res.status(500).json({ message: err.message });
+      } else {
+        res.send(result[0]);
+      }
+    }
+  );
+});
+
 export default router;

@@ -20,6 +20,7 @@ import UserLogin from './pages/UserLogin';
 import UserRegister from './pages/UserRegister';
 import Categories from './pages/Categories';
 import Category from './pages/Category';
+import SingleItem from './pages/SingleItem';
 
 function UserLayout() {
   return (
@@ -150,6 +151,7 @@ function App() {
                 element={<Category title={obj.title} />}
               />
             ))}
+            <Route path=":id" element={<SingleItem />} />
           </Route>
 
           <Route path="/admin">
