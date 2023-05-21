@@ -21,6 +21,7 @@ import UserRegister from './pages/UserRegister';
 import Categories from './pages/Categories';
 import Category from './pages/Category';
 import SingleItem from './pages/SingleItem';
+import Basket from './pages/Basket';
 
 function UserLayout() {
   return (
@@ -109,7 +110,7 @@ const categoryData = [
 ];
 
 function App() {
-  const { mode, admin, updateAdmin } = useData();
+  const { mode, admin, updateAdmin, updateBasket } = useData();
   const [isPending, setIsPending] = useState(token ? true : false);
 
   useEffect(() => {
@@ -123,6 +124,8 @@ function App() {
         setIsPending(false);
       });
     }
+    const basket = localStorage.getItem('basket');
+    basket && updateBasket(JSON.parse(basket));
   }, []);
 
   const theme = createTheme({
@@ -151,6 +154,7 @@ function App() {
                 element={<Category title={obj.title} />}
               />
             ))}
+            <Route path="basket" element={<Basket />} />
             <Route path=":id" element={<SingleItem />} />
           </Route>
 

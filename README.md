@@ -24,12 +24,13 @@ Priekš sava gala eksāmena projekta esmu izlēmis izveidot ģitāru tirdzniecī
 
 <br>
 
-### *Kā palaist projektu* ❓
+### *Kā lokāli palaist projektu* ❓
 ---
 1. Lejupielādēt Node.js 18 LTS (citas versijas nav pārbaudītas) no [<img src="https://brandslogos.com/wp-content/uploads/thumbs/nodejs-logo-vector.svg" alt="Node.js Ikona" width="80">](https://nodejs.org "Node.js")
 2. Lejupielādēt "sistema" mapi no GitHub
-3. Divas reizes atvērt lejupielādēto mapi sevis izvēlētā komandrindas rīkā
-4. Secībā izpildīt sekojošās komandas:
+3. Aiziet uz "*sistema/client/src/url.js*" failu un `useLocalServer` vērtību nomainīt uz `true`
+4. Divas reizes atvērt lejupielādēto mapi sevis izvēlētā komandrindas rīkā
+5. Secībā izpildīt sekojošās komandas:
     - Vienā logā veikt sekojošo:
         - Izpildīt komandu `cd server`, lai ieietu sistēmas servera puses mapē
         - Izpildīt komandu `npm i`, lai instalētu vajadzīgās pakotnes
@@ -38,7 +39,7 @@ Priekš sava gala eksāmena projekta esmu izlēmis izveidot ģitāru tirdzniecī
         - Izpildīt komandu `cd client`, lai ieietu sistēmas mājaslapas puses mapē
         - Izpildīt komandu `npm i`, lai instalētu vajadzīgās pakotnes
         - Izpildīt komandu `npm run dev`, lai palaistu programmas mājaslapas pusi **(neaizvērt logu)**
-5. Pēc pēdējās kommandas veikšanas atvērt uzrādīto saiti
+6. Pēc pēdējās kommandas veikšanas atvērt uzrādīto saiti
 
 <br>
 
@@ -46,7 +47,6 @@ Priekš sava gala eksāmena projekta esmu izlēmis izveidot ģitāru tirdzniecī
 ---
 - Interneta veikals
   - Galvene (Meklēšanas funkcionalitāte)
-  - Grozs
   - Maksāšanas forma
   - "Par mums" lapa
   - Pasūtījumu lapa

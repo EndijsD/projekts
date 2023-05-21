@@ -1,5 +1,10 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { UPDATE_MODE, UPDATE_ADMIN, UPDATE_USER } from '../redux/DataRedux';
+import {
+  UPDATE_MODE,
+  UPDATE_ADMIN,
+  UPDATE_USER,
+  UPDATE_BASKET,
+} from '../redux/DataRedux';
 
 const useData = () => {
   const redux = useSelector((state) => state.DataRedux);
@@ -19,7 +24,11 @@ const useData = () => {
     dispatch(UPDATE_USER(data));
   };
 
-  return { ...redux, changeMode, updateAdmin, updateUser };
+  const updateBasket = (data) => {
+    dispatch(UPDATE_BASKET(data));
+  };
+
+  return { ...redux, changeMode, updateAdmin, updateUser, updateBasket };
 };
 
 export default useData;

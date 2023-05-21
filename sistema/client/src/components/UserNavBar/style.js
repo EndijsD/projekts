@@ -1,5 +1,13 @@
 import { styled, alpha } from '@mui/system';
-import { IconButton, InputBase, Toolbar } from '@mui/material';
+import {
+  Box,
+  Button,
+  IconButton,
+  InputBase,
+  MenuItem,
+  Toolbar,
+  Typography,
+} from '@mui/material';
 
 export const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -31,16 +39,28 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
       width: '55vw',
     },
 
+    [theme.breakpoints.down('md')]: {
+      width: '40vw',
+      '&:focus': {
+        width: '45vw',
+      },
+    },
     [theme.breakpoints.down(700)]: {
       width: '80vw',
       '&:focus': {
         width: '85vw',
       },
     },
-    [theme.breakpoints.down(400)]: {
+    [theme.breakpoints.down(600)]: {
       width: '70vw',
       '&:focus': {
         width: '75vw',
+      },
+    },
+    [theme.breakpoints.down(400)]: {
+      width: '60vw',
+      '&:focus': {
+        width: '65vw',
       },
     },
   },
@@ -56,20 +76,68 @@ export const DesktopToolbar = styled(Toolbar)(({ theme }) => ({
 
 export const MobileToolbar = styled(Toolbar)(({ theme }) => ({
   flexDirection: 'column',
-  paddingBottom: '1rem',
+  padding: '1rem',
 
   [theme.breakpoints.up(700)]: {
     display: 'none',
   },
+  [theme.breakpoints.down(350)]: {
+    gap: 13,
+  },
 }));
 
-export const StyledBox = styled(Toolbar)`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
-`;
+export const StyledBox = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  width: '100%',
+
+  [theme.breakpoints.down(350)]: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: 5,
+  },
+}));
 
 export const WhiteIconButton = styled(IconButton)`
   color: inherit;
 `;
+
+export const StyledImg = styled('img')({
+  width: 70,
+});
+
+export const StyledMenuItem = styled(MenuItem)({
+  display: 'flex',
+  justifyContent: 'space-between',
+  gap: '1rem',
+});
+
+export const StyledMenuBox = styled(Box)({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1.5rem',
+  maxWidth: 200,
+});
+
+export const ItemTitle = styled(Typography)({
+  whiteSpace: 'pre-line',
+});
+
+export const ItemPriceCount = styled(Typography)({
+  fontWeight: 'bold',
+  pointerEvents: 'none',
+});
+
+export const StyledItemButton = styled(Button)(({ theme }) => ({
+  color:
+    theme.palette.mode == 'light'
+      ? theme.palette.common.black
+      : theme.palette.common.white,
+  textTransform: 'lowercase',
+  justifyContent: 'start',
+
+  '&:hover': {
+    background: 'rgb(200, 10, 10)',
+    color: theme.palette.common.white,
+  },
+}));

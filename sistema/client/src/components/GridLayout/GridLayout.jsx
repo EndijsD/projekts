@@ -9,6 +9,7 @@ import {
 import * as S from './style';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useData from '../../hooks/useData';
 
 const GridLayout = ({ title, data, error, isPending }) => {
   const nav = useNavigate();
@@ -16,6 +17,7 @@ const GridLayout = ({ title, data, error, isPending }) => {
   const down950 = useMediaQuery((theme) => theme.breakpoints.down(950));
   const down710 = useMediaQuery((theme) => theme.breakpoints.down(710));
   const theme = useTheme();
+  const { basket, updateBasket } = useData();
 
   const handleOnMouseMove = (e) => {
     const { currentTarget: target } = e;
@@ -35,8 +37,29 @@ const GridLayout = ({ title, data, error, isPending }) => {
       }
   }, [data, error]);
 
-  const putInBasket = (id) => {
-    console.log('Put item with ID: ' + id + ' in basket');
+  const putInBasket = (obj) => {
+    const itemID = basket.findIndex(
+      (item) => item.product.preces_id == obj.preces_id
+    );
+    let updatedBasket;
+
+    if (itemID != -1) {
+      updatedBasket = basket.map((item) =>
+        item.product.preces_id == obj.preces_id
+          ? {
+              ...item,
+              count:
+                item.count + 1 <= obj.pieejamiba ? item.count + 1 : item.count,
+            }
+          : item
+      );
+    } else {
+      const newItem = { product: obj, count: 1 };
+      updatedBasket = basket.concat(newItem);
+    }
+
+    localStorage.setItem('basket', JSON.stringify(updatedBasket));
+    updateBasket(updatedBasket);
   };
 
   return (
@@ -85,7 +108,7 @@ const GridLayout = ({ title, data, error, isPending }) => {
                     >
                       <S.BuyButton
                         variant="outlined"
-                        onClick={() => putInBasket(obj.preces_id)}
+                        onClick={() => putInBasket(obj)}
                         className="buyButton"
                       >
                         Ielikt Grozā

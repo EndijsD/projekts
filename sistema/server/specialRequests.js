@@ -60,7 +60,7 @@ router.post('/category', async (req, res) => {
   const title = req.body.title;
 
   db.query(
-    `select preces_id, nosaukums, cena, attelu_celi from preces inner join precu_specifikacija on preces.id_precu_specifikacija = precu_specifikacija.precu_specifikacija_id where kategorija = ?`,
+    `select preces_id, nosaukums, cena, attelu_celi, pieejamiba from preces inner join precu_specifikacija on preces.id_precu_specifikacija = precu_specifikacija.precu_specifikacija_id where kategorija = ?`,
     title,
     (err, result) => {
       if (err) {
