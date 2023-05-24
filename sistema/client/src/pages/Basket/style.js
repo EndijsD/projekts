@@ -64,3 +64,14 @@ export const HighlightedTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
+
+export const HoverTableRow = styled(TableRow)(({ theme }) => ({
+  '&:hover': {
+    background: theme.palette.action.selected,
+  },
+}));
+
+export const SpecialTableCell = styled(TableCell)({
+  textAlign: 'center',
+  cursor: 'pointer',
+});

@@ -37,24 +37,26 @@ const GridLayout = ({ title, data, error, isPending }) => {
       }
   }, [data, error]);
 
-  const putInBasket = (obj) => {
+  const putInBasket = (product) => {
     const itemID = basket.findIndex(
-      (item) => item.product.preces_id == obj.preces_id
+      (item) => item.product.preces_id == product.preces_id
     );
     let updatedBasket;
 
     if (itemID != -1) {
       updatedBasket = basket.map((item) =>
-        item.product.preces_id == obj.preces_id
+        item.product.preces_id == product.preces_id
           ? {
               ...item,
               count:
-                item.count + 1 <= obj.pieejamiba ? item.count + 1 : item.count,
+                item.count + 1 <= product.pieejamiba
+                  ? item.count + 1
+                  : item.count,
             }
           : item
       );
     } else {
-      const newItem = { product: obj, count: 1 };
+      const newItem = { product: product, count: 1 };
       updatedBasket = basket.concat(newItem);
     }
 
@@ -83,10 +85,10 @@ const GridLayout = ({ title, data, error, isPending }) => {
           rowSpacing={{ xs: 1, sm: 2, md: 3 }}
           columnSpacing={{ xs: 1, sm: 2, md: 3 }}
         >
-          {data.map((obj) => {
+          {data.map((product) => {
             return (
               <Grid
-                key={obj.preces_id}
+                key={product.preces_id}
                 item
                 xs={down430 ? false : 6}
                 sm={down710 ? 6 : 4}
@@ -94,21 +96,23 @@ const GridLayout = ({ title, data, error, isPending }) => {
               >
                 <S.StyledCard
                   onClick={(e) =>
-                    e.target.type != 'button' && nav('/' + obj.preces_id)
+                    e.target.type != 'button' && nav('/' + product.preces_id)
                   }
                   className="card"
                 >
                   <S.StyledCardContent>
                     <S.StyledCardMedia
                       component="img"
-                      image={obj.attelu_celi[0]}
+                      image={product.attelu_celi[0]}
                     />
                     <CardActions
                       sx={{ display: 'flex', justifyContent: 'center' }}
                     >
                       <S.BuyButton
                         variant="outlined"
-                        onClick={() => putInBasket(obj)}
+                        onClick={() =>
+                          product.pieejamiba && putInBasket(product)
+                        }
                         className="buyButton"
                       >
                         Ielikt Grozā
@@ -119,10 +123,10 @@ const GridLayout = ({ title, data, error, isPending }) => {
                       sx={{ display: 'block', mt: '18px', mb: '18px' }}
                     />
                     <Typography variant="h5" sx={{ position: 'relative' }}>
-                      {obj.cena} €
+                      {product.cena} €
                     </Typography>
                     <Typography sx={{ position: 'relative' }}>
-                      {obj.nosaukums}
+                      {product.nosaukums}
                     </Typography>
                   </S.StyledCardContent>
                 </S.StyledCard>

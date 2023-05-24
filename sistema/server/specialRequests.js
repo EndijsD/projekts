@@ -1,6 +1,9 @@
 import express from 'express';
 const router = express.Router();
 import db from './database.js';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
 
 router.get('/dashboard', async (req, res) => {
   const tableResults = {
@@ -87,5 +90,34 @@ router.get('/prece/:id', async (req, res) => {
     }
   );
 });
+
+router.get('/user_address', authenticateToken, async (req, res) => {
+  const user_id = req.data.lietotaji_id;
+  const address_id = req.data.id_adreses;
+
+  db.query(
+    `select lietotaji_id, vards, uzvards, talrunis, epasts, adreses.* from lietotaji inner join adreses on lietotaji.id_adreses = adreses.adreses_id where lietotaji_id = ? and adreses_id = ?`,
+    [user_id, address_id],
+    (err, result) => {
+      if (err) {
+        res.status(500).json({ message: err.message });
+      } else {
+        res.send(result[0]);
+      }
+    }
+  );
+});
+
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if (!token) return res.sendStatus(401);
+
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, data) => {
+    if (err) return res.sendStatus(403);
+    req.data = data;
+    next();
+  });
+}
 
 export default router;

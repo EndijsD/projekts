@@ -2,6 +2,7 @@ import { styled, alpha } from '@mui/system';
 import {
   Box,
   Button,
+  Container,
   IconButton,
   InputBase,
   MenuItem,
@@ -13,8 +14,31 @@ export const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
+
   '&:hover': {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  [theme.breakpoints.down(700)]: {
+    order: 3,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+}));
+
+export const StyledButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.mode == 'light' && 'white',
+  padding: 0,
+
+  '&:hover': { backgroundColor: 'transparent' },
+
+  [theme.breakpoints.down(700)]: {
+    order: 1,
+  },
+}));
+
+export const IconBox = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down(700)]: {
+    order: 2,
   },
 }));
 
@@ -46,9 +70,9 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
       },
     },
     [theme.breakpoints.down(700)]: {
-      width: '80vw',
+      width: '75vw',
       '&:focus': {
-        width: '85vw',
+        width: '80vw',
       },
     },
     [theme.breakpoints.down(600)]: {
@@ -66,35 +90,22 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export const DesktopToolbar = styled(Toolbar)(({ theme }) => ({
-  justifyContent: 'space-between',
+export const StyledToolbar = styled(Toolbar)(({ theme, location }) => ({
+  justifyContent: location == '/checkout' ? 'center' : 'space-between',
+  flexWrap: 'wrap',
 
   [theme.breakpoints.down(700)]: {
-    display: 'none',
-  },
-}));
-
-export const MobileToolbar = styled(Toolbar)(({ theme }) => ({
-  flexDirection: 'column',
-  padding: '1rem',
-
-  [theme.breakpoints.up(700)]: {
-    display: 'none',
-  },
-  [theme.breakpoints.down(350)]: {
     gap: 13,
   },
-}));
-
-export const StyledBox = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  width: '100%',
-
   [theme.breakpoints.down(350)]: {
     flexDirection: 'column',
-    alignItems: 'center',
     gap: 5,
+  },
+}));
+
+export const StyledContainer = styled(Container)(({ theme, location }) => ({
+  [theme.breakpoints.down(700)]: {
+    padding: location != '/checkout' && '1rem',
   },
 }));
 

@@ -36,6 +36,7 @@ const UserRegister = () => {
   const [isPending, setIsPending] = useState(false);
   const [success, setSuccess] = useState(false);
   const nav = useNavigate();
+  const [active, setActive] = useState([false, false]);
 
   const handleClickShowPassword = (index) => {
     setShowPassword((showPassword) =>
@@ -273,6 +274,28 @@ const UserRegister = () => {
                   </InputAdornment>
                 ),
               }}
+              inputProps={{
+                pattern: '(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}',
+              }}
+              onMouseEnter={() =>
+                setActive((prev) =>
+                  prev.map((value, i) => (i == 0 ? true : value))
+                )
+              }
+              onMouseLeave={() =>
+                setActive((prev) =>
+                  prev.map((value, i) => (i == 0 ? false : value))
+                )
+              }
+              sx={{
+                '.MuiFormHelperText-root': {
+                  visibility: active[0] ? '' : 'hidden',
+                },
+                mb: -2,
+              }}
+              helperText={
+                '8 rakstzīmes, kur ir vismaz 1 lielais, mazais burts un cipars'
+              }
               name="parole"
               value={userValues.parole}
               onChange={handleFormInputChange}
@@ -297,6 +320,28 @@ const UserRegister = () => {
                   </InputAdornment>
                 ),
               }}
+              inputProps={{
+                pattern: '(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}',
+              }}
+              onMouseEnter={() =>
+                setActive((prev) =>
+                  prev.map((value, i) => (i == 1 ? true : value))
+                )
+              }
+              onMouseLeave={() =>
+                setActive((prev) =>
+                  prev.map((value, i) => (i == 1 ? false : value))
+                )
+              }
+              sx={{
+                '.MuiFormHelperText-root': {
+                  visibility: active[1] ? '' : 'hidden',
+                },
+                mb: -2,
+              }}
+              helperText={
+                '8 rakstzīmes, kur ir vismaz 1 lielais, mazais burts un cipars'
+              }
               name="parole_atk"
               value={userValues.parole_atk}
               onChange={handleFormInputChange}

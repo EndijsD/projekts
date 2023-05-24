@@ -22,11 +22,12 @@ import Categories from './pages/Categories';
 import Category from './pages/Category';
 import SingleItem from './pages/SingleItem';
 import Basket from './pages/Basket';
+import Checkout from './pages/Checkout';
 
-function UserLayout() {
+function UserLayout({ isPendingUser }) {
   return (
     <>
-      <UserNavBar />
+      <UserNavBar isPendingUser={isPendingUser} />
       <Outlet />
       <UserFooter />
     </>
@@ -79,8 +80,6 @@ const tableData = {
   ],
 };
 
-const token = sessionStorage.getItem('admin_token');
-
 const categoryData = [
   {
     title: 'Klasiskās ģitāras',
@@ -109,21 +108,39 @@ const categoryData = [
   },
 ];
 
+const admin_token = sessionStorage.getItem('admin_token');
+const user_token = localStorage.getItem('user_token');
+
 function App() {
-  const { mode, admin, updateAdmin, updateBasket } = useData();
-  const [isPending, setIsPending] = useState(token ? true : false);
+  const { mode, admin, updateAdmin, updateBasket, user, updateUser } =
+    useData();
+  const [isPendingAdmin, setIsPendingAdmin] = useState(
+    admin_token ? true : false
+  );
+  const [isPendingUser, setIsPendingUser] = useState(user_token ? true : false);
 
   useEffect(() => {
-    if (!admin && token) {
+    if (!admin && admin_token) {
       fetch(url + 'auth/verify', {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${admin_token}`,
         },
       }).then((res) => {
-        if (res.ok) updateAdmin(token);
-        setIsPending(false);
+        if (res.ok) updateAdmin(admin_token);
+        setIsPendingAdmin(false);
       });
     }
+    if (!user && user_token) {
+      fetch(url + 'auth/verify', {
+        headers: {
+          Authorization: `Bearer ${user_token}`,
+        },
+      }).then((res) => {
+        if (res.ok) updateUser(user_token);
+        setIsPendingUser(false);
+      });
+    }
+
     const basket = localStorage.getItem('basket');
     basket && updateBasket(JSON.parse(basket));
   }, []);
@@ -139,10 +156,14 @@ function App() {
       <CssBaseline />
       <Router>
         <Routes>
-          <Route path="/" element={<UserLayout />}>
+          <Route
+            path="/"
+            element={<UserLayout isPendingUser={isPendingUser} />}
+          >
             <Route index element={<Main />} />
             <Route path="login" element={<UserLogin />} />
             <Route path="register" element={<UserRegister />} />
+            <Route path="checkout" element={<Checkout />} />
             <Route
               path="categories"
               element={<Categories categoryData={categoryData} />}
@@ -183,7 +204,7 @@ function App() {
               <Route
                 path="/admin/*"
                 element={
-                  !isPending && (
+                  !isPendingAdmin && (
                     <NotFound desc="Jums nav piekļuve administrācijas sistēmai" />
                   )
                 }

@@ -175,6 +175,7 @@ const SingleItem = () => {
                     <S.BuyButton
                       variant="outlined"
                       onClick={() =>
+                        data.pieejamiba &&
                         putInBasket({
                           attelu_celi: data.attelu_celi,
                           cena: data.cena,

@@ -77,13 +77,17 @@ const Basket = () => {
             {localBasket.length ? (
               <>
                 {localBasket.map((item) => (
-                  <TableRow key={item.product.preces_id}>
-                    <S.StyledTableCell>
+                  <S.HoverTableRow key={item.product.preces_id}>
+                    <S.SpecialTableCell
+                      onClick={() => nav('/' + item.product.preces_id)}
+                    >
                       <S.StyledImg src={item.product.attelu_celi[0]} />
-                    </S.StyledTableCell>
-                    <S.StyledTableCell>
+                    </S.SpecialTableCell>
+                    <S.SpecialTableCell
+                      onClick={() => nav('/' + item.product.preces_id)}
+                    >
                       <Typography>{item.product.nosaukums}</Typography>
-                    </S.StyledTableCell>
+                    </S.SpecialTableCell>
                     <S.StyledTableCell>
                       <Typography>{item.product.cena} €</Typography>
                     </S.StyledTableCell>
@@ -132,7 +136,7 @@ const Basket = () => {
                         {(item.product.cena * item.count).toFixed(2)} €
                       </Typography>
                     </S.StyledTableCell>
-                  </TableRow>
+                  </S.HoverTableRow>
                 ))}
                 <S.HighlightedTableRow>
                   <S.StyledTableCell colSpan={5}>

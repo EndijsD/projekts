@@ -47,6 +47,5 @@ Priekš sava gala eksāmena projekta esmu izlēmis izveidot ģitāru tirdzniecī
 ---
 - Interneta veikals
   - Galvene (Meklēšanas funkcionalitāte)
-  - Maksāšanas forma
   - "Par mums" lapa
   - Pasūtījumu lapa
