@@ -46,6 +46,5 @@ Priekš sava gala eksāmena projekta esmu izlēmis izveidot ģitāru tirdzniecī
 ### *Veicamie darbi* ✅
 ---
 - Interneta veikals
-  - Galvene (Meklēšanas funkcionalitāte)
   - "Par mums" lapa
-  - Pasūtījumu lapa
+  - Profila lapa

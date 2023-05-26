@@ -108,6 +108,38 @@ router.get('/user_address', authenticateToken, async (req, res) => {
   );
 });
 
+router.get('/orders', authenticateToken, async (req, res) => {
+  const user_id = req.data.lietotaji_id;
+
+  db.query(
+    `select * from pasutijumi where id_lietotaji = ?`,
+    user_id,
+    (err, result) => {
+      if (err) {
+        res.status(500).json({ message: err.message });
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+router.get('/pasutijumi_preces/:id', async (req, res) => {
+  const id = req.params.id;
+
+  db.query(
+    `select * from pasutijumi_preces inner join preces on id_preces = preces_id where id_pasutijumi = ?`,
+    id,
+    (err, result) => {
+      if (err) {
+        res.status(500).json({ message: err.message });
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];

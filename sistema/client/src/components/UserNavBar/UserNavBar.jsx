@@ -31,8 +31,15 @@ function UserNavBar({ isPendingUser }) {
   ]);
   const nav = useNavigate();
   const theme = useTheme();
-  const { mode, changeMode, user, updateUser, basket, updateBasket } =
-    useData();
+  const {
+    mode,
+    changeMode,
+    user,
+    updateUser,
+    basket,
+    updateBasket,
+    updateSearch,
+  } = useData();
   const [searchText, setSearchText] = useState('');
   const [priceHovered, setPriceHovered] = useState(false);
   const location = useLocation().pathname;
@@ -79,7 +86,10 @@ function UserNavBar({ isPendingUser }) {
   }, [user]);
 
   useEffect(() => {
-    // console.log(searchText);
+    updateSearch(searchText);
+
+    if (searchText.trim()) navigate('search');
+    else nav('/');
   }, [searchText]);
 
   const navigate = (route) => {
@@ -162,6 +172,11 @@ function UserNavBar({ isPendingUser }) {
                 placeholder="Meklēt…"
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
+                onKeyUp={(e) =>
+                  e.key == 'Enter' &&
+                  e.target.value.trim() &&
+                  navigate('search')
+                }
               />
             </S.Search>
           )}

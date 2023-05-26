@@ -4,6 +4,7 @@ import {
   UPDATE_ADMIN,
   UPDATE_USER,
   UPDATE_BASKET,
+  UPDATE_SEARCH,
 } from '../redux/DataRedux';
 
 const useData = () => {
@@ -28,7 +29,18 @@ const useData = () => {
     dispatch(UPDATE_BASKET(data));
   };
 
-  return { ...redux, changeMode, updateAdmin, updateUser, updateBasket };
+  const updateSearch = (data) => {
+    dispatch(UPDATE_SEARCH(data));
+  };
+
+  return {
+    ...redux,
+    changeMode,
+    updateAdmin,
+    updateUser,
+    updateBasket,
+    updateSearch,
+  };
 };
 
 export default useData;

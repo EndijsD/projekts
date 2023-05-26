@@ -8,7 +8,13 @@ import UserNavBar from './components/UserNavBar';
 import UserFooter from './components/UserFooter';
 import AdminLogin from './pages/AdminLogin';
 import AdminNavBar from './components/AdminNavBar';
-import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
+import {
+  Button,
+  createTheme,
+  CssBaseline,
+  ThemeProvider,
+  Typography,
+} from '@mui/material';
 import useData from './hooks/useData';
 import Dashboard from './pages/Dashboard';
 import Data from './pages/Data';
@@ -23,6 +29,8 @@ import Category from './pages/Category';
 import SingleItem from './pages/SingleItem';
 import Basket from './pages/Basket';
 import Checkout from './pages/Checkout';
+import Orders from './pages/Orders';
+import Search from './pages/Search';
 
 function UserLayout({ isPendingUser }) {
   return (
@@ -127,9 +135,10 @@ function App() {
         },
       }).then((res) => {
         if (res.ok) updateAdmin(admin_token);
-        setIsPendingAdmin(false);
       });
+      setIsPendingAdmin(false);
     }
+
     if (!user && user_token) {
       fetch(url + 'auth/verify', {
         headers: {
@@ -137,8 +146,8 @@ function App() {
         },
       }).then((res) => {
         if (res.ok) updateUser(user_token);
-        setIsPendingUser(false);
       });
+      setIsPendingUser(false);
     }
 
     const basket = localStorage.getItem('basket');
@@ -164,6 +173,25 @@ function App() {
             <Route path="login" element={<UserLogin />} />
             <Route path="register" element={<UserRegister />} />
             <Route path="checkout" element={<Checkout />} />
+            <Route path="search" element={<Search />} />
+            <Route
+              path="orders"
+              element={
+                isPendingUser || user ? (
+                  <Orders />
+                ) : (
+                  <NotFound
+                    desc="Lai piekļūtu veikto pasūtījumu lapai,"
+                    descButtonText="autorizējies"
+                    desc2="!"
+                    descButtonLink="/login"
+                    displayButton
+                    buttonText="Nav konts? Reģistrējies"
+                    buttonLink="/register"
+                  />
+                )
+              }
+            />
             <Route
               path="categories"
               element={<Categories categoryData={categoryData} />}
@@ -205,7 +233,10 @@ function App() {
                 path="/admin/*"
                 element={
                   !isPendingAdmin && (
-                    <NotFound desc="Jums nav piekļuve administrācijas sistēmai" />
+                    <NotFound
+                      title="Atvainojiet,"
+                      desc="Jums nav piekļuve administrācijas sistēmai"
+                    />
                   )
                 }
               />

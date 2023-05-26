@@ -33,6 +33,7 @@ const Main = () => {
         fetch(url + `preces/${obj.id_preces}`).then(async (res) => {
           if (res.ok) {
             const data = await res.json();
+            setPopularError(null);
             setPopularData((prev) =>
               !prev ? [].concat(data) : prev.concat(data)
             );

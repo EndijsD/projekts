@@ -35,7 +35,7 @@ const Basket = () => {
   };
 
   useEffect(() => {
-    setLocalBasket(JSON.parse(localStorage.getItem('basket')));
+    setLocalBasket(JSON.parse(localStorage.getItem('basket')) || []);
   }, [basket]);
 
   const handleRemoveItem = (id) => {

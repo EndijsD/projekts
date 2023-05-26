@@ -5,6 +5,7 @@ const initialState = {
   admin: null,
   user: null,
   basket: [],
+  search: '',
 };
 
 export const dataSlice = createSlice({
@@ -23,11 +24,19 @@ export const dataSlice = createSlice({
     UPDATE_BASKET: (state, action) => {
       return { ...state, basket: action.payload };
     },
+    UPDATE_SEARCH: (state, action) => {
+      return { ...state, search: action.payload };
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { UPDATE_MODE, UPDATE_ADMIN, UPDATE_USER, UPDATE_BASKET } =
-  dataSlice.actions;
+export const {
+  UPDATE_MODE,
+  UPDATE_ADMIN,
+  UPDATE_USER,
+  UPDATE_BASKET,
+  UPDATE_SEARCH,
+} = dataSlice.actions;
 
 export default dataSlice.reducer;
