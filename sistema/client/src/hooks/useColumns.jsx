@@ -7,6 +7,11 @@ const useColumns = (link, setModifiedRow) => {
   const [selectedRowID, setSelectedRowID] = useState(null);
 
   const columns = useMemo(() => {
+    const isNumeric = (str) => {
+      if (typeof str != 'string') return false;
+      return !isNaN(str) && !isNaN(parseFloat(str));
+    };
+
     switch (link.slice(link.lastIndexOf('/') + 1)) {
       case 'pasutijumi':
         return [
@@ -139,7 +144,8 @@ const useColumns = (link, setModifiedRow) => {
             headerName: 'Cena',
             editable: true,
             minWidth: 100,
-            valueFormatter: (params) => params.value + ' €',
+            valueFormatter: (params) =>
+              isNumeric(params.value) ? params.value + ' €' : params.value,
             flex: 1,
           },
           {
@@ -155,7 +161,10 @@ const useColumns = (link, setModifiedRow) => {
             headerName: 'Attēlu ceļi',
             editable: true,
             minWidth: 100,
-            valueGetter: (params) => JSON.stringify(params.value),
+            valueGetter: (params) =>
+              typeof params.value == 'object'
+                ? JSON.stringify(params.value)
+                : params.value,
             flex: 2,
           },
           {
@@ -163,7 +172,9 @@ const useColumns = (link, setModifiedRow) => {
             headerName: 'Pievienošanas datums',
             minWidth: 160,
             valueGetter: (params) =>
-              moment(params.value).format('YYYY-MM-DD HH:mm:ss'),
+              moment(params.value).isValid()
+                ? moment(params.value).format('YYYY-MM-DD HH:mm:ss')
+                : 'AUTO',
             flex: 1,
           },
           {
@@ -237,7 +248,10 @@ const useColumns = (link, setModifiedRow) => {
             headerName: 'Īpašības',
             editable: true,
             minWidth: 100,
-            valueGetter: (params) => JSON.stringify(params.value),
+            valueGetter: (params) =>
+              typeof params.value == 'object'
+                ? JSON.stringify(params.value)
+                : params.value,
             flex: 3,
           },
           {

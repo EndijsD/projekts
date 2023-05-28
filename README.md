@@ -21,6 +21,7 @@ Priekš sava gala eksāmena projekta esmu izlēmis izveidot ģitāru tirdzniecī
 - CSS - Lielākoties izmantots ar MUI styled()
 - Git & GitHub
 - Visual Studio Code
+- Trello
 
 <br>
 

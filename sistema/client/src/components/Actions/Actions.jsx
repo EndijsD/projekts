@@ -72,19 +72,19 @@ const Actions = ({
 
   const handleSave = () => {
     setSaveLoading(true);
-    const entryWithoutID = Object.assign({}, params.row);
+    const data = Object.assign({}, params.row);
 
-    delete entryWithoutID[
-      Object.keys(entryWithoutID).filter((key) => key.includes('_id'))
-    ];
-    Object.keys(entryWithoutID).forEach((key) =>
-      entryWithoutID[key] == '' ? (entryWithoutID[key] = null) : false
+    delete data[Object.keys(data).filter((key) => key.includes('_id'))];
+    data.hasOwnProperty('pievienosanas_datums') &&
+      delete data['pievienosanas_datums'];
+    Object.keys(data).forEach((key) =>
+      data[key] == '' ? (data[key] = null) : false
     );
 
     fetch(link, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(entryWithoutID),
+      body: JSON.stringify(data),
     }).then((res) => {
       setSaveLoading(false);
       setEditedRowIDs([]);

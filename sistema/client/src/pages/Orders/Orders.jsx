@@ -18,6 +18,7 @@ import {
 import { ExpandMore } from '@mui/icons-material';
 import moment from 'moment';
 import { PropagateLoader } from 'react-spinners';
+import { useNavigate } from 'react-router-dom';
 
 const orderHeadings = [
   'Pasūtījuma nr.',
@@ -41,6 +42,7 @@ const Orders = () => {
   const [isPending, setIsPending] = useState(true);
   let doOnce = true;
   const theme = useTheme();
+  const nav = useNavigate();
 
   useEffect(() => {
     if (user && doOnce) {
@@ -178,9 +180,12 @@ const Orders = () => {
                                           order.pasutijumi_id
                                       )
                                       .map((orderProduct) => (
-                                        <TableRow
+                                        <S.HoverTableRow
                                           key={
                                             orderProduct.pasutijumi_preces_id
+                                          }
+                                          onClick={() =>
+                                            nav('/' + orderProduct.preces_id)
                                           }
                                         >
                                           <S.StyledTableCell>
@@ -211,7 +216,7 @@ const Orders = () => {
                                               ).toFixed(2) + ' €'}
                                             </Typography>
                                           </S.StyledTableCell>
-                                        </TableRow>
+                                        </S.HoverTableRow>
                                       ))}
                                 </TableBody>
                               </Table>

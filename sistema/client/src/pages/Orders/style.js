@@ -61,3 +61,11 @@ export const Status = styled(Typography)(({ status }) => ({
   color: 'white',
   fontWeight: 'bold',
 }));
+
+export const HoverTableRow = styled(TableRow)(({ theme }) => ({
+  cursor: 'pointer',
+
+  '&:hover': {
+    background: theme.palette.action.hover,
+  },
+}));
