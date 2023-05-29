@@ -55,6 +55,11 @@ router.post('/', async (req, res) => {
   );
 });
 
+const isNumeric = (str) => {
+  if (typeof str != 'string') return false;
+  return !isNaN(str) && !isNaN(parseFloat(str));
+};
+
 router.patch('/:id', async (req, res) => {
   const table = req.baseUrl.slice(1);
   const id = req.params.id;
@@ -65,7 +70,7 @@ router.patch('/:id', async (req, res) => {
     .map((key) => key + '=?')
     .toString();
   const values = Object.values(req.body).map((value) =>
-    moment(value, moment.RFC_2822, true).isValid()
+    !isNumeric(value) && moment(value, moment.ISO_8601, true).isValid()
       ? moment(value).format('YYYY-MM-DD HH:mm:ss')
       : value
   );
