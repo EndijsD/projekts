@@ -26,6 +26,7 @@ import Checkout from './pages/Checkout';
 import Orders from './pages/Orders';
 import Search from './pages/Search';
 import Profile from './pages/Profile';
+import AboutUs from './pages/AboutUs';
 
 function UserLayout({ isPendingUser }) {
   return (
@@ -169,6 +170,7 @@ function App() {
             <Route path="register" element={<UserRegister />} />
             <Route path="checkout" element={<Checkout />} />
             <Route path="search" element={<Search />} />
+            <Route path="about-us" element={<AboutUs />} />
             <Route
               path="orders"
               element={

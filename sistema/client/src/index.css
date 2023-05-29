@@ -14,4 +14,31 @@ body {
   --star-left: 'auto';
   --mouse-x: 0;
   --mouse-y: 0;
+  --columns: 0;
+  --rows: 0;
+}
+
+.tile {
+  cursor: pointer;
+  position: relative;
+}
+
+.tile:hover:before {
+  background-color: rgba(30, 30, 30, 0.4);
+}
+
+.tile:before {
+  background-color: rgba(15, 15, 15, 0.4);
+  content: '';
+  inset: 1px;
+  position: absolute;
+}
+
+.centered {
+  position: absolute;
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }

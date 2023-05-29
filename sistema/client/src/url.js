@@ -7,7 +7,7 @@ const liveProtocol = 'https';
 const liveHostname = 'system-server.up.railway.app';
 const liveURL = liveProtocol + '://' + liveHostname + '/';
 
-const useLocalServer = false;
+const useLocalServer = true;
 
 const url = useLocalServer ? localURL : liveURL;
 
