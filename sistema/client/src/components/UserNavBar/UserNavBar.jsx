@@ -5,6 +5,7 @@ import {
   MenuItem,
   useTheme,
   Divider,
+  Badge,
 } from '@mui/material';
 import {
   Store,
@@ -21,6 +22,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import * as S from './style';
 import useData from '../../hooks/useData';
 import { ClipLoader } from 'react-spinners';
+
+let listeningToSearch = false;
+let originalLocation = '';
 
 function UserNavBar({ isPendingUser }) {
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -43,6 +47,10 @@ function UserNavBar({ isPendingUser }) {
   const [searchText, setSearchText] = useState('');
   const [priceHovered, setPriceHovered] = useState(false);
   const location = useLocation().pathname;
+
+  useEffect(() => {
+    if (location != '/search') originalLocation = location;
+  }, [location]);
 
   const handleOpenUserMenu = (event) => {
     if (!isPendingUser) setAnchorElUser(event.currentTarget);
@@ -86,10 +94,14 @@ function UserNavBar({ isPendingUser }) {
   }, [user]);
 
   useEffect(() => {
-    updateSearch(searchText);
+    if (searchText && !listeningToSearch) listeningToSearch = true;
 
-    if (searchText.trim()) navigate('search');
-    else nav('/');
+    if (listeningToSearch) {
+      updateSearch(searchText);
+
+      if (searchText.trim()) navigate('search');
+      else nav(originalLocation || '/');
+    }
   }, [searchText]);
 
   const navigate = (route) => {
@@ -172,11 +184,7 @@ function UserNavBar({ isPendingUser }) {
                 placeholder="Meklēt…"
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
-                onKeyUp={(e) =>
-                  e.key == 'Enter' &&
-                  e.target.value.trim() &&
-                  navigate('search')
-                }
+                onKeyUp={(e) => e.key == 'Enter' && navigate('search')}
               />
             </S.Search>
           )}
@@ -186,7 +194,9 @@ function UserNavBar({ isPendingUser }) {
                 sx={{ cursor: 'default' }}
                 onMouseEnter={handleOpenBasketMenu}
               >
-                {basket.length ? <ShoppingCart /> : <ShoppingCartOutlined />}
+                <Badge badgeContent={basket.length}>
+                  {basket.length ? <ShoppingCart /> : <ShoppingCartOutlined />}
+                </Badge>
               </S.WhiteIconButton>
 
               <Menu

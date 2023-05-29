@@ -48,4 +48,3 @@ Priekš sava gala eksāmena projekta esmu izlēmis izveidot ģitāru tirdzniecī
 ---
 - Interneta veikals
   - "Par mums" lapa
-  - Profila lapa

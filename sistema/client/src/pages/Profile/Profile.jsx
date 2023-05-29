@@ -4,10 +4,14 @@ import {
   CircularProgress,
   IconButton,
   InputAdornment,
+  Typography,
+  useTheme,
 } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as S from './style';
 import url from '../../url';
+import { PropagateLoader } from 'react-spinners';
+import useData from '../../hooks/useData';
 import { useNavigate } from 'react-router-dom';
 
 const initialUserValues = {
@@ -15,8 +19,6 @@ const initialUserValues = {
   uzvards: '',
   talrunis: '',
   epasts: '',
-  parole: '',
-  parole_atk: '',
 };
 
 const initialAddressValues = {
@@ -29,15 +31,68 @@ const initialAddressValues = {
   dzivokla_nr: '',
 };
 
-const UserRegister = () => {
+const initialPasswordValues = {
+  parole: '',
+  parole_atk: '',
+};
+
+let user_id = null;
+let address_id = null;
+
+const Profile = () => {
   const [userValues, setUserValues] = useState(initialUserValues);
   const [addressValues, setAddressValues] = useState(initialAddressValues);
+  const [passwordValues, setPasswordValues] = useState(initialPasswordValues);
   const [showPassword, setShowPassword] = useState([false, false]);
-  const [problems, setProblems] = useState([]);
-  const [isPending, setIsPending] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const nav = useNavigate();
+  const [problem, setProblem] = useState('');
+  const [isPending, setIsPending] = useState('autofill');
+  const [success, setSuccess] = useState('');
   const [active, setActive] = useState([false, false]);
+  const { user, updateUser } = useData();
+  const theme = useTheme();
+  const [gotAutofill, setGotAutofill] = useState(false);
+  const nav = useNavigate();
+
+  useEffect(() => {
+    user &&
+      fetch(url + 'special/user_address', {
+        headers: {
+          Authorization: `Bearer ${user}`,
+        },
+      }).then(async (res) => {
+        if (!res.ok) {
+          setIsPending('');
+          setProblem('autofill');
+        } else {
+          const data = await res.json();
+
+          user_id = Object.entries(data).find(
+            (item) => item[0] == 'lietotaji_id'
+          )[1];
+          address_id = Object.entries(data).find(
+            (item) => item[0] == 'adreses_id'
+          )[1];
+
+          const autofillArrUser = Object.entries(data).filter((item) =>
+            userValues.hasOwnProperty(item[0])
+          );
+          const autofillObjUser = Object.fromEntries(autofillArrUser);
+          setUserValues(autofillObjUser);
+
+          let autofillArrAddress = Object.entries(data).filter((item) =>
+            addressValues.hasOwnProperty(item[0])
+          );
+          autofillArrAddress = autofillArrAddress.map((item) =>
+            item[1] == null ? [item[0], ''] : item
+          );
+          const autofillObjAddress = Object.fromEntries(autofillArrAddress);
+          setAddressValues(autofillObjAddress);
+
+          setGotAutofill(true);
+          setIsPending('');
+        }
+      });
+  }, [user]);
 
   const handleClickShowPassword = (index) => {
     setShowPassword((showPassword) =>
@@ -45,73 +100,145 @@ const UserRegister = () => {
     );
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmitUser = (e) => {
     e.preventDefault();
-    setIsPending(true);
+    setIsPending('user');
+
+    fetch(url + 'lietotaji/' + user_id, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userValues),
+    }).then((res) => {
+      if (!res.ok) {
+        setIsPending('');
+        setProblem('user');
+
+        setTimeout(() => {
+          setProblem('');
+        }, 1500);
+      } else {
+        setIsPending('');
+        setSuccess('user');
+
+        setTimeout(() => {
+          setSuccess('');
+        }, 1500);
+      }
+    });
+  };
+
+  const handleFormSubmitAddress = (e) => {
+    e.preventDefault();
+    setIsPending('address');
 
     const notMin4AddressFields =
       Object.values(addressValues).filter((value) => value).length < 4;
-    const notSamePasswordTwice = userValues.parole != userValues.parole_atk;
 
-    if (notMin4AddressFields || notSamePasswordTwice) {
-      if (notMin4AddressFields) setProblems((prev) => prev.concat('adr'));
-      if (notSamePasswordTwice) setProblems((prev) => prev.concat('pass'));
-
+    if (notMin4AddressFields) {
       setIsPending(false);
+      setProblem('adrFields');
 
       setTimeout(() => {
-        setProblems([]);
+        setProblem('');
       }, 1500);
 
       return;
     }
 
-    fetch(url + 'adreses', {
-      method: 'POST',
+    fetch(url + 'adreses/' + address_id, {
+      method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...addressValues }),
-    }).then(async (res) => {
+      body: JSON.stringify(addressValues),
+    }).then((res) => {
       if (!res.ok) {
-        setIsPending(false);
-        setProblems((prev) => prev.concat('error'));
+        setIsPending('');
+        setProblem('address');
 
         setTimeout(() => {
-          setProblems([]);
+          setProblem('');
         }, 1500);
       } else {
-        const data = await res.json();
+        setIsPending('');
+        setSuccess('address');
 
-        if (data.id) {
-          let finalUserValues = {};
-          Object.assign(finalUserValues, userValues);
-
-          delete finalUserValues.parole_atk;
-          finalUserValues['id_adreses'] = data.id;
-
-          fetch(url + 'lietotaji', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(finalUserValues),
-          }).then(async (res) => {
-            if (!res.ok) {
-              setIsPending(false);
-              setProblems('error');
-
-              setTimeout(() => {
-                setProblems([]);
-              }, 1500);
-            } else {
-              setIsPending(false);
-              setSuccess(true);
-
-              setTimeout(() => {
-                nav('/login');
-              }, 1500);
-            }
-          });
-        }
+        setTimeout(() => {
+          setSuccess('');
+        }, 1500);
       }
     });
+  };
+
+  const handleFormSubmitPassword = (e) => {
+    e.preventDefault();
+    setIsPending('password');
+
+    const notSamePasswordTwice =
+      passwordValues.parole != passwordValues.parole_atk;
+
+    if (notSamePasswordTwice) {
+      setIsPending(false);
+      setProblem('pass');
+
+      setTimeout(() => {
+        setProblem('');
+      }, 1500);
+
+      return;
+    }
+
+    fetch(url + 'lietotaji/' + user_id, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ parole: passwordValues.parole }),
+    }).then((res) => {
+      if (!res.ok) {
+        setIsPending('');
+        setProblem('password');
+
+        setTimeout(() => {
+          setProblem('');
+        }, 1500);
+      } else {
+        setIsPending('');
+        setSuccess('password');
+        setPasswordValues(initialPasswordValues);
+
+        setTimeout(() => {
+          setSuccess('');
+        }, 1500);
+      }
+    });
+  };
+
+  const handleDeleteAccount = (e) => {
+    e.preventDefault();
+    setIsPending('delete');
+
+    fetch(url + 'adreses/' + address_id, {
+      method: 'DELETE',
+    }).then((res) => {
+      if (!res.ok) {
+        setIsPending('');
+        setProblem('delete');
+
+        setTimeout(() => {
+          setProblem('');
+        }, 1500);
+      } else {
+        setIsPending('');
+        logout();
+
+        setTimeout(() => {
+          setSuccess('');
+        }, 1500);
+      }
+    });
+  };
+
+  const logout = () => {
+    updateUser(null);
+    localStorage.removeItem('user_token');
+    nav('/');
   };
 
   const handleFormInputChange = (e) => {
@@ -122,19 +249,24 @@ const UserRegister = () => {
           ...userValues,
           [name]: value,
         })
-      : setAddressValues({
+      : addressValues.hasOwnProperty(name)
+      ? setAddressValues({
           ...addressValues,
+          [name]: value,
+        })
+      : setPasswordValues({
+          ...passwordValues,
           [name]: value,
         });
   };
 
   return (
     <S.MainBox>
-      <S.StyledPaper>
-        <S.Form onSubmit={handleFormSubmit}>
-          <S.Title>Reģistrēties</S.Title>
+      {isPending != 'autofill' && gotAutofill && (
+        <S.StyledPaper>
+          <S.Title>Profils</S.Title>
 
-          <S.StyledBox>
+          <S.Form onSubmit={handleFormSubmitUser}>
             <S.SubTitle variant="h6">Jūsu personiskā informācija</S.SubTitle>
 
             <S.InputField
@@ -178,9 +310,30 @@ const UserRegister = () => {
               required
               autoComplete="true"
             />
-          </S.StyledBox>
 
-          <S.StyledBox>
+            <S.SubmitButton
+              variant="outlined"
+              type={success ? undefined : 'submit'}
+              color={
+                problem == 'user'
+                  ? 'error'
+                  : success == 'user'
+                  ? 'success'
+                  : 'primary'
+              }
+              disabled={Boolean(isPending)}
+            >
+              {isPending == 'user' ? (
+                <CircularProgress />
+              ) : success == 'user' ? (
+                <Check />
+              ) : (
+                <>Saglabāt</>
+              )}
+            </S.SubmitButton>
+          </S.Form>
+
+          <S.Form onSubmit={handleFormSubmitAddress}>
             <S.SubTitle variant="h6">
               Jūsu adrese <S.Info>(minimums aizpildīt 4. laukus)</S.Info>
             </S.SubTitle>
@@ -201,7 +354,7 @@ const UserRegister = () => {
               name="pilseta"
               value={addressValues.pilseta}
               onChange={handleFormInputChange}
-              error={problems.includes('adr') && !addressValues.pilseta}
+              error={problem == 'adrFields' && !addressValues.pilseta}
               autoComplete="true"
             />
 
@@ -211,7 +364,7 @@ const UserRegister = () => {
               name="novads"
               value={addressValues.novads}
               onChange={handleFormInputChange}
-              error={problems.includes('adr') && !addressValues.novads}
+              error={problem == 'adrFields' && !addressValues.novads}
               autoComplete="true"
             />
 
@@ -221,7 +374,7 @@ const UserRegister = () => {
               name="pagasts"
               value={addressValues.pagasts}
               onChange={handleFormInputChange}
-              error={problems.includes('adr') && !addressValues.pagasts}
+              error={problem == 'adrFields' && !addressValues.pagasts}
               autoComplete="true"
             />
 
@@ -231,7 +384,7 @@ const UserRegister = () => {
               name="iela"
               value={addressValues.iela}
               onChange={handleFormInputChange}
-              error={problems.includes('adr') && !addressValues.iela}
+              error={problem == 'adrFields' && !addressValues.iela}
               autoComplete="true"
             />
 
@@ -241,7 +394,7 @@ const UserRegister = () => {
               name="majas_nos"
               value={addressValues.majas_nos}
               onChange={handleFormInputChange}
-              error={problems.includes('adr') && !addressValues.majas_nos}
+              error={problem == 'adrFields' && !addressValues.majas_nos}
               autoComplete="true"
             />
 
@@ -251,16 +404,37 @@ const UserRegister = () => {
               name="dzivokla_nr"
               value={addressValues.dzivokla_nr}
               onChange={handleFormInputChange}
-              error={problems.includes('adr') && !addressValues.dzivokla_nr}
+              error={problem == 'adrFields' && !addressValues.dzivokla_nr}
               autoComplete="true"
             />
-          </S.StyledBox>
 
-          <S.StyledBox>
-            <S.SubTitle variant="h6">Jūsu parole</S.SubTitle>
+            <S.SubmitButton
+              variant="outlined"
+              type={success ? undefined : 'submit'}
+              color={
+                problem == 'address'
+                  ? 'error'
+                  : success == 'address'
+                  ? 'success'
+                  : 'primary'
+              }
+              disabled={Boolean(isPending)}
+            >
+              {isPending == 'address' ? (
+                <CircularProgress />
+              ) : success == 'address' ? (
+                <Check />
+              ) : (
+                <>Saglabāt</>
+              )}
+            </S.SubmitButton>
+          </S.Form>
+
+          <S.Form onSubmit={handleFormSubmitPassword}>
+            <S.SubTitle variant="h6">Mainīt paroli</S.SubTitle>
 
             <S.InputField
-              label="Parole"
+              label="Jaunā parole"
               variant="standard"
               type={showPassword[0] ? 'text' : 'password'}
               InputProps={{
@@ -298,15 +472,15 @@ const UserRegister = () => {
                 '8 rakstzīmes, kur ir vismaz 1 lielais, mazais burts un cipars'
               }
               name="parole"
-              value={userValues.parole}
+              value={passwordValues.parole}
               onChange={handleFormInputChange}
               required
-              error={problems.includes('pass')}
+              error={problem == 'pass'}
               autoComplete="true"
             />
 
             <S.InputField
-              label="Parole atkārtoti"
+              label="Jaunā parole atkārtoti"
               variant="standard"
               type={showPassword[1] ? 'text' : 'password'}
               InputProps={{
@@ -344,51 +518,65 @@ const UserRegister = () => {
                 '8 rakstzīmes, kur ir vismaz 1 lielais, mazais burts un cipars'
               }
               name="parole_atk"
-              value={userValues.parole_atk}
+              value={passwordValues.parole_atk}
               onChange={handleFormInputChange}
               required
-              error={problems.includes('pass')}
+              error={problem == 'pass'}
               autoComplete="true"
             />
-          </S.StyledBox>
 
-          <S.ButtonBox>
             <S.SubmitButton
-              variant="contained"
+              variant="outlined"
               type={success ? undefined : 'submit'}
               color={
-                problems.includes('error') && !isPending
+                problem == 'password'
                   ? 'error'
-                  : success
+                  : success == 'password'
                   ? 'success'
                   : 'primary'
               }
-              disabled={isPending}
+              disabled={Boolean(isPending)}
             >
-              {isPending ? (
+              {isPending == 'password' ? (
                 <CircularProgress />
-              ) : success ? (
+              ) : success == 'password' ? (
                 <Check />
               ) : (
-                <>Pievienoties</>
+                <>Saglabāt</>
               )}
             </S.SubmitButton>
+          </S.Form>
+
+          <S.Form onSubmit={handleDeleteAccount}>
+            <S.SubTitle variant="h6">Tiesības tikt aizmirstam</S.SubTitle>
 
             <Button
+              variant="contained"
+              type="submit"
+              color={'error'}
+              disabled={Boolean(isPending)}
               sx={{
-                borderRadius: 50,
-                maxWidth: 220,
-                alignSelf: 'center',
+                background: problem == 'delete' && 'DarkRed',
+                '&:hover': { background: problem == 'delete' && 'DarkRed' },
               }}
-              onClick={() => nav('/login')}
             >
-              Ir konts? Autorizējies
+              {isPending == 'delete' ? <CircularProgress /> : <>Dzēst kontu</>}
             </Button>
-          </S.ButtonBox>
-        </S.Form>
-      </S.StyledPaper>
+          </S.Form>
+        </S.StyledPaper>
+      )}
+
+      {isPending == 'autofill' && (
+        <PropagateLoader color={theme.palette.primary.main} />
+      )}
+
+      {!isPending && problem == 'autofill' && (
+        <Typography variant="h5" color="error" sx={{ fontWeight: 'bold' }}>
+          Notikusi neparedzēta kļūda...
+        </Typography>
+      )}
     </S.MainBox>
   );
 };
 
-export default UserRegister;
+export default Profile;

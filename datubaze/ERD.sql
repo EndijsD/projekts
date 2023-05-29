@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `ERD`.`lietotaji` (
   CONSTRAINT `fk_lietotaji_adreses`
     FOREIGN KEY (`id_adreses`)
     REFERENCES `ERD`.`adreses` (`adreses_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -139,8 +139,8 @@ CREATE TABLE IF NOT EXISTS `ERD`.`atsauksmes` (
   `vertejums` INT(1) NOT NULL,
   `komentars` VARCHAR(255) NULL,
   `id_preces` INT NOT NULL,
-  `id_lietotaji` INT NOT NULL,
-  PRIMARY KEY (`atsauksmes_id`, `id_preces`, `id_lietotaji`),
+  `id_lietotaji` INT NULL,
+  PRIMARY KEY (`atsauksmes_id`, `id_preces`),
   CONSTRAINT `fk_atsauksmes_preces1`
     FOREIGN KEY (`id_preces`)
     REFERENCES `ERD`.`preces` (`preces_id`)
@@ -149,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `ERD`.`atsauksmes` (
   CONSTRAINT `fk_atsauksmes_klienti1`
     FOREIGN KEY (`id_lietotaji`)
     REFERENCES `ERD`.`lietotaji` (`lietotaji_id`)
-    ON DELETE NO ACTION
+    ON DELETE SET NULL
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -200,7 +200,7 @@ CREATE TABLE IF NOT EXISTS `ERD`.`pasutijumi` (
   CONSTRAINT `fk_pasutijumi_lietotaji1`
     FOREIGN KEY (`id_lietotaji`)
     REFERENCES `ERD`.`lietotaji` (`lietotaji_id`)
-    ON DELETE NO ACTION
+    ON DELETE SET NULL
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_pasutijumi_lietotaji_copy11`
     FOREIGN KEY (`id_neregistreti_klienti`)

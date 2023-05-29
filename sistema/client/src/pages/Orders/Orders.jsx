@@ -34,6 +34,7 @@ const productHeadings = [
   'Daudzums',
   'Cena',
 ];
+
 const Orders = () => {
   const { user } = useData();
   const [orders, setOrders] = useState(null);

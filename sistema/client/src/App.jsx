@@ -8,13 +8,7 @@ import UserNavBar from './components/UserNavBar';
 import UserFooter from './components/UserFooter';
 import AdminLogin from './pages/AdminLogin';
 import AdminNavBar from './components/AdminNavBar';
-import {
-  Button,
-  createTheme,
-  CssBaseline,
-  ThemeProvider,
-  Typography,
-} from '@mui/material';
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import useData from './hooks/useData';
 import Dashboard from './pages/Dashboard';
 import Data from './pages/Data';
@@ -31,6 +25,7 @@ import Basket from './pages/Basket';
 import Checkout from './pages/Checkout';
 import Orders from './pages/Orders';
 import Search from './pages/Search';
+import Profile from './pages/Profile';
 
 function UserLayout({ isPendingUser }) {
   return (
@@ -181,7 +176,25 @@ function App() {
                   <Orders />
                 ) : (
                   <NotFound
-                    desc="Lai piekļūtu veikto pasūtījumu lapai,"
+                    desc="Lai piekļūtu pasūtījumu lapai,"
+                    descButtonText="autorizējies"
+                    desc2="!"
+                    descButtonLink="/login"
+                    displayButton
+                    buttonText="Nav konts? Reģistrējies"
+                    buttonLink="/register"
+                  />
+                )
+              }
+            />
+            <Route
+              path="profile"
+              element={
+                isPendingUser || user ? (
+                  <Profile />
+                ) : (
+                  <NotFound
+                    desc="Lai piekļūtu profila lapai,"
                     descButtonText="autorizējies"
                     desc2="!"
                     descButtonLink="/login"

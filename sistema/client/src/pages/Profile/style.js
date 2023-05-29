@@ -4,6 +4,7 @@ import { Box, Button, Paper, TextField, Typography } from '@mui/material';
 export const MainBox = styled(Box)({
   display: 'flex',
   justifyContent: 'center',
+  alignItems: 'center',
   flex: 1,
 });
 
@@ -12,6 +13,9 @@ export const StyledPaper = styled(Paper)(({ theme }) => ({
   borderRadius: 20,
   width: 800,
   padding: '2rem',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '2rem',
 
   [theme.breakpoints.down('md')]: {
     width: 700,
@@ -39,11 +43,21 @@ export const StyledPaper = styled(Paper)(({ theme }) => ({
   },
 }));
 
-export const Form = styled('form')({
+export const Form = styled('form')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: '2rem',
-});
+  gap: '1rem',
+  background:
+    theme.palette.mode == 'light'
+      ? theme.palette.grey[100]
+      : theme.palette.grey[900],
+  padding: 20,
+  borderRadius: 20,
+
+  [theme.breakpoints.down('sm')]: {
+    background: 'none',
+  },
+}));
 
 export const Title = styled(Typography)(({ theme }) => ({
   fontSize: '2em',
@@ -68,38 +82,11 @@ export const InputField = styled(TextField)(({ theme }) => ({
   },
 }));
 
-export const SubmitButton = styled(Button)(({ theme }) => ({
+export const SubmitButton = styled(Button)({
   borderRadius: 50,
   fontWeight: 700,
-  width: 350,
+  width: 150,
   alignSelf: 'center',
-
-  [theme.breakpoints.down(400)]: {
-    width: '100%',
-  },
-}));
-
-export const StyledBox = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '1rem',
-  background:
-    theme.palette.mode == 'light'
-      ? theme.palette.grey[100]
-      : theme.palette.grey[900],
-  padding: 20,
-  borderRadius: 20,
-
-  [theme.breakpoints.down('sm')]: {
-    background: 'none',
-  },
-}));
-
-export const ButtonBox = styled(Box)({
-  padding: 20,
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '1rem',
 });
 
 export const Info = styled(Typography)({

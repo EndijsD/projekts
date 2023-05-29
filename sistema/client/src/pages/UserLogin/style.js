@@ -8,16 +8,12 @@ export const box = styled(Box)({
   flex: 1,
 });
 
-export const LoginBox = styled(Box)(({ theme }) => ({
+export const LoginBox = styled(Paper)(({ theme }) => ({
   display: 'flex',
-  flexDirection: 'row',
-  boxShadow:
-    theme.palette.mode == 'light'
-      ? `0px 0px 10px ${theme.palette.grey[500]}`
-      : `0px 0px 10px ${theme.palette.grey[900]}`,
   borderRadius: 20,
 
   [theme.breakpoints.down('sm')]: {
+    background: 'none',
     boxShadow: 'none',
   },
 }));
