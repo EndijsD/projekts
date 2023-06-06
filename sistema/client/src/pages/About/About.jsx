@@ -1,19 +1,17 @@
 import { useEffect, useState } from 'react';
 import * as S from './style';
 import anime from 'animejs/lib/anime.es.js';
+import { Typography } from '@mui/material';
 
-let columns = 0,
-  rows = 0;
-const AboutUs = () => {
-  // toggled = false;
-
-  const [toggled, setToggled] = useState(false);
+const About = () => {
+  let columns = 0,
+    rows = 0,
+    toggled = false;
+  const [toggledState, setToggledState] = useState(false);
 
   const toggle = () => {
-    // toggled = !toggled;
-    setToggled((prev) => !prev);
-
-    document.body.classList.toggle('toggled');
+    toggled = !toggled;
+    setToggledState((prev) => !prev);
   };
 
   const handleOnClick = (index) => {
@@ -32,9 +30,9 @@ const AboutUs = () => {
   const createTile = (index) => {
     const tile = document.createElement('div');
 
-    tile.classList.add('tile');
+    tile.className = 'tile';
     tile.style.opacity = toggled ? 0 : 1;
-    tile.onclick = (e) => handleOnClick(index);
+    tile.onclick = () => handleOnClick(index);
 
     return tile;
   };
@@ -69,17 +67,24 @@ const AboutUs = () => {
   return (
     <S.StyledContainer>
       <S.Tiles id="tiles"></S.Tiles>
-      {toggled ? (
-        <div class="centered">
-          <S.Img src="/User/Common/guitar-shop-scaled.jpg" />
-        </div>
-      ) : (
-        <div class="centered">
-          <S.Text id="title">Interneta veikals</S.Text>
-        </div>
-      )}
+      <S.StyledBox sx={{ padding: '1rem' }}>
+        <S.Title toggled={toggledState ? 1 : 0} variant="h2">
+          Par projektu
+        </S.Title>
+        <S.Text toggled={toggledState ? 1 : 0}>
+          Šo sistēmu veidoja Endijs Dārznieks. Sistēma ir moderns interneta
+          veikals, kurš sastāv no mājaslapas un servera puses. Priekš mājaslapas
+          tiek izmantots React.js un priekš API servera Node.js.
+        </S.Text>
+      </S.StyledBox>
+      <S.StyledBox>
+        <S.Img
+          toggled={toggledState ? 1 : 0}
+          src="/User/Common/guitar-shop-scaled.jpg"
+        />
+      </S.StyledBox>
     </S.StyledContainer>
   );
 };
 
-export default AboutUs;
+export default About;

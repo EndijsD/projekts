@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `ERD`.`lietotaji` (
     FOREIGN KEY (`id_adreses`)
     REFERENCES `ERD`.`adreses` (`adreses_id`)
     ON DELETE CASCADE
-    ON UPDATE NO ACTION)
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 CREATE UNIQUE INDEX `lietotaji_id_UNIQUE` ON `ERD`.`lietotaji` (`lietotaji_id` ASC) VISIBLE;
@@ -138,19 +138,19 @@ CREATE TABLE IF NOT EXISTS `ERD`.`atsauksmes` (
   `izveidosanas_datums` DATETIME NOT NULL DEFAULT NOW(),
   `vertejums` INT(1) NOT NULL,
   `komentars` VARCHAR(255) NULL,
-  `id_preces` INT NOT NULL,
+  `id_preces` INT NULL,
   `id_lietotaji` INT NULL,
-  PRIMARY KEY (`atsauksmes_id`, `id_preces`),
+  PRIMARY KEY (`atsauksmes_id`),
   CONSTRAINT `fk_atsauksmes_preces1`
     FOREIGN KEY (`id_preces`)
     REFERENCES `ERD`.`preces` (`preces_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE SET NULL
+    ON UPDATE SET NULL,
   CONSTRAINT `fk_atsauksmes_klienti1`
     FOREIGN KEY (`id_lietotaji`)
     REFERENCES `ERD`.`lietotaji` (`lietotaji_id`)
     ON DELETE SET NULL
-    ON UPDATE NO ACTION)
+    ON UPDATE SET NULL)
 ENGINE = InnoDB;
 
 CREATE UNIQUE INDEX `atsauksmes_id_UNIQUE` ON `ERD`.`atsauksmes` (`atsauksmes_id` ASC) VISIBLE;
@@ -176,8 +176,8 @@ CREATE TABLE IF NOT EXISTS `ERD`.`neregistreti_klienti` (
   CONSTRAINT `fk_lietotaji_adreses0`
     FOREIGN KEY (`id_adreses`)
     REFERENCES `ERD`.`adreses` (`adreses_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 CREATE INDEX `fk_lietotaji_adreses_idx` ON `ERD`.`neregistreti_klienti` (`id_adreses` ASC) VISIBLE;
@@ -201,12 +201,12 @@ CREATE TABLE IF NOT EXISTS `ERD`.`pasutijumi` (
     FOREIGN KEY (`id_lietotaji`)
     REFERENCES `ERD`.`lietotaji` (`lietotaji_id`)
     ON DELETE SET NULL
-    ON UPDATE NO ACTION,
+    ON UPDATE SET NULL,
   CONSTRAINT `fk_pasutijumi_lietotaji_copy11`
     FOREIGN KEY (`id_neregistreti_klienti`)
     REFERENCES `ERD`.`neregistreti_klienti` (`neregistreti_klienti_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE SET NULL
+    ON UPDATE SET NULL)
 ENGINE = InnoDB;
 
 CREATE UNIQUE INDEX `pasutijumi_id_UNIQUE` ON `ERD`.`pasutijumi` (`pasutijumi_id` ASC) VISIBLE;
@@ -226,19 +226,19 @@ DROP TABLE IF EXISTS `ERD`.`pasutijumi_preces` ;
 CREATE TABLE IF NOT EXISTS `ERD`.`pasutijumi_preces` (
   `pasutijumi_preces_id` INT NOT NULL AUTO_INCREMENT,
   `id_pasutijumi` INT NOT NULL,
-  `id_preces` INT NOT NULL,
+  `id_preces` INT NULL,
   `skaits` INT NOT NULL DEFAULT 1,
-  PRIMARY KEY (`pasutijumi_preces_id`, `id_pasutijumi`, `id_preces`),
+  PRIMARY KEY (`pasutijumi_preces_id`, `id_pasutijumi`),
   CONSTRAINT `fk_pasutijumi_has_preces_pasutijumi1`
     FOREIGN KEY (`id_pasutijumi`)
     REFERENCES `ERD`.`pasutijumi` (`pasutijumi_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_pasutijumi_has_preces_preces1`
     FOREIGN KEY (`id_preces`)
     REFERENCES `ERD`.`preces` (`preces_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE SET NULL
+    ON UPDATE SET NULL)
 ENGINE = InnoDB;
 
 CREATE INDEX `fk_pasutijumi_has_preces_preces1_idx` ON `ERD`.`pasutijumi_preces` (`id_preces` ASC) VISIBLE;

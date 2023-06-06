@@ -15,6 +15,7 @@ export const MUIContainer = styled(Container)(({ theme }) => ({
 
 export const StyledPaper = styled(Paper)(({ theme }) => ({
   background: theme.palette.mode == 'light' && theme.palette.primary.main,
+  borderRadius: 0,
 }));
 
 export const StyledIconButton = styled(IconButton)(({ theme }) => ({

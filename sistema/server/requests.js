@@ -63,15 +63,20 @@ const isNumeric = (str) => {
 router.patch('/:id', async (req, res) => {
   const table = req.baseUrl.slice(1);
   const id = req.params.id;
+
   if (req.body.parole) {
     req.body.parole = bcrypt.hashSync(req.body.parole, 10);
   }
+
   const keys = Object.keys(req.body)
     .map((key) => key + '=?')
     .toString();
+
   const values = Object.values(req.body).map((value) =>
     !isNumeric(value) && moment(value, moment.ISO_8601, true).isValid()
       ? moment(value).format('YYYY-MM-DD HH:mm:ss')
+      : value && (value.constructor === Array || typeof value === 'object')
+      ? JSON.stringify(value)
       : value
   );
 

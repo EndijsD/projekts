@@ -26,7 +26,7 @@ import Checkout from './pages/Checkout';
 import Orders from './pages/Orders';
 import Search from './pages/Search';
 import Profile from './pages/Profile';
-import AboutUs from './pages/AboutUs';
+import About from './pages/About';
 
 function UserLayout({ isPendingUser }) {
   return (
@@ -116,8 +116,15 @@ const admin_token = sessionStorage.getItem('admin_token');
 const user_token = localStorage.getItem('user_token');
 
 function App() {
-  const { mode, admin, updateAdmin, updateBasket, user, updateUser } =
-    useData();
+  const {
+    mode,
+    changeMode,
+    admin,
+    updateAdmin,
+    updateBasket,
+    user,
+    updateUser,
+  } = useData();
   const [isPendingAdmin, setIsPendingAdmin] = useState(
     admin_token ? true : false
   );
@@ -146,6 +153,9 @@ function App() {
       setIsPendingUser(false);
     }
 
+    const mode_in_localStorage = localStorage.getItem('mode');
+    mode_in_localStorage && changeMode(mode_in_localStorage);
+
     const basket = localStorage.getItem('basket');
     basket && updateBasket(JSON.parse(basket));
   }, []);
@@ -170,7 +180,7 @@ function App() {
             <Route path="register" element={<UserRegister />} />
             <Route path="checkout" element={<Checkout />} />
             <Route path="search" element={<Search />} />
-            <Route path="about-us" element={<AboutUs />} />
+            <Route path="about-us" element={<About />} />
             <Route
               path="orders"
               element={
@@ -247,11 +257,13 @@ function App() {
               <Route
                 path="/admin/*"
                 element={
-                  !isPendingAdmin && (
+                  !isPendingAdmin ? (
                     <NotFound
                       title="Atvainojiet,"
                       desc="Jums nav piekļuve administrācijas sistēmai"
                     />
+                  ) : (
+                    <></>
                   )
                 }
               />

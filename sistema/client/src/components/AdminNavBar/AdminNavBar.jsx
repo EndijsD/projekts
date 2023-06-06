@@ -54,7 +54,9 @@ function AdminNavBar() {
   }, [isAboveMedium]);
 
   const switchMode = () => {
-    changeMode(mode == 'dark' ? 'light' : 'dark');
+    const new_mode = mode == 'dark' ? 'light' : 'dark';
+    changeMode(new_mode);
+    localStorage.setItem('mode', new_mode);
   };
 
   return (
