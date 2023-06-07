@@ -1,3 +1,4 @@
+// Importē nepieciešamās komponentes, ikonas, funkcijas, stilus un āķus
 import {
   AppBar,
   Typography,
@@ -23,10 +24,13 @@ import * as S from './style';
 import useData from '../../hooks/useData';
 import { ClipLoader } from 'react-spinners';
 
+// Definē divus mainīgos
 let listeningToSearch = false;
 let originalLocation = '';
 
+// Izveido jaunu funkciju/komponenti
 function UserNavBar({ isPendingUser }) {
+  // Definē nepieciešamos mainīgos
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElBasket, setAnchorElBasket] = useState(null);
   const [settings, setSettings] = useState([
@@ -48,39 +52,57 @@ function UserNavBar({ isPendingUser }) {
   const [priceHovered, setPriceHovered] = useState(false);
   const location = useLocation().pathname;
 
+  // Tiek pielietots React āķis, padodot tam attiecīgo funkciju,
+  // kurš veiks darbības, balstoties uz mainīgā izmaiņām
   useEffect(() => {
+    // Ja mājaslapas atrašanās vieta nav "/search", tad nomaina mainīgo vērtību
     if (location != '/search') originalLocation = location;
   }, [location]);
 
   const handleOpenUserMenu = (event) => {
+    // Ja ir lietotājs, tad nomaina mainīgā vērtību uz uzspiesto elementu
     if (!isPendingUser) setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseUserMenu = () => {
+    // Nomaina mainīgā vērtību uz null
     setAnchorElUser(null);
   };
 
   const handleOpenBasketMenu = (event) => {
+    // Nomaina mainīgā vērtību uz uzspiesto elementu
     setAnchorElBasket(event.currentTarget);
   };
 
   const handleCloseBasketMenu = () => {
+    // Nomaina mainīgā vērtību uz null
     setAnchorElBasket(null);
   };
 
+  // Funkcija, priekš lietotāja izlogošanās
   const logout = () => {
+    // Nomaina globālā "user" mainīgā vērtību uz null
     updateUser(null);
+    // Noņem "user_token" atribūtu no pārlūkprogrammas lokālās atmiņas
     localStorage.removeItem('user_token');
+    // Nomaina URL ceļu uz "/login"
     nav('/login');
   };
 
+  // Funkcija, priekš motīva nomainīšanas
   const switchMode = () => {
+    // Skatoties no iepriekšējās motīva vērtības, izveido jaunu mainīgo ar pretējo motīvu
     const new_mode = mode == 'dark' ? 'light' : 'dark';
+    // Pārmaina globālā mainīgā "mode" vērtību uz jauno motīvu (mainīgais "new_mode")
     changeMode(new_mode);
+    // Iestata pārlūkprogrammas lokālajā atmiņā atribūtu "mode" ar jaunā motīva vērtību (mainīgais "new_mode")
     localStorage.setItem('mode', new_mode);
   };
 
+  // Tiek pielietots React āķis, padodot tam attiecīgo funkciju,
+  // kurš veiks darbības, balstoties uz mainīgā izmaiņām
   useEffect(() => {
+    // Ja ir lietotājs, tad nomaina iestatījumus, savādāk nomaina uz citiem iestatījumiem
     if (user) {
       setSettings([
         { name: 'Profils', route: 'profile' },
@@ -95,30 +117,43 @@ function UserNavBar({ isPendingUser }) {
     }
   }, [user]);
 
+  // Tiek pielietots React āķis, padodot tam attiecīgo funkciju,
+  // kurš veiks darbības, balstoties uz mainīgā izmaiņām
   useEffect(() => {
+    // Ja ir kaut kas ierakstīt meklēšanā un "listeningToSearch" ir nepatiess, tad nomaina mainīgā vērtību
     if (searchText && !listeningToSearch) listeningToSearch = true;
 
     if (listeningToSearch) {
+      // Ja "listeningToSearch" ir patiess, tad atjauno globālo mainīgo "search"
       updateSearch(searchText);
 
+      // Ja noņemot sākuma un beigu atstarpes, jelprojām ir teksts, tad izpildīt funkciju, kurai ir padota vērtība
       if (searchText.trim()) navigate('search');
+      // Savādāk nomainīt URL ceļu uz "originalLocation", bet ja tāds nav, tad uz "/"
       else nav(originalLocation || '/');
     }
   }, [searchText]);
 
+  // Funckija, priekš URL ceļa pārmainīšanas
   const navigate = (route) => {
     if (route) {
+      // Ja ir padots ceļš, tad pārmainīt URL ceļu uz to
       nav('/' + route);
     } else {
+      // Savādāk izsaukt izlogošanās funkciju
       logout();
     }
+    // Izsaukt sekojošās divas funkcijas
     handleCloseUserMenu();
     handleCloseBasketMenu();
   };
 
+  // Funkcija, priekš peles kursora uziešanas uz cenas
   const handleHoverShowcase = (id) => {
+    // Nomaina mainīgā vērtību
     setPriceHovered(true);
 
+    // Definē jaunu grozu, kur ir samazināta cena, uz kā peles kursors atrodas
     const updatedBasket = basket.map((item) =>
       item.product.preces_id == id
         ? {
@@ -128,17 +163,24 @@ function UserNavBar({ isPendingUser }) {
         : item
     );
 
+    // Atjauno globālā "basket" mainīgā vērtību
     updateBasket(updatedBasket);
   };
 
+  // Funkcija, priekš peles kursora nobīdīšanas no cenas
   const handleHoverShowcaseReset = () => {
+    // Atjauno globālā "basket" mainīgā vērtību uz pārlūkprogrammas lokālās atmiņas "basket" atribūta vērtību
     updateBasket(JSON.parse(localStorage.getItem('basket')));
+    // Nomaina mainīgā vērtību
     setPriceHovered(false);
   };
 
+  // Funckija, priekš uzpiešanas uz cenas
   const handleRemoveItem = (id) => {
+    // Definē jaunu mainīgo ar pārlūkprogrammas lokālās atmiņas "basket" atribūta vērtību
     const tempBasket = JSON.parse(localStorage.getItem('basket'));
 
+    // Izveido mainīgo ar noņemtu skaitu uzpiestajai precei
     let updatedBasket = tempBasket.map((item) =>
       item.product.preces_id == id && item.count != 1
         ? {
@@ -149,12 +191,17 @@ function UserNavBar({ isPendingUser }) {
         ? null
         : item
     );
+    // Izveido mainīgo, kura vērtība ir masīvs ar nepatiess vērtībām, atkarībā vai "updatedBasket" ir null vērtības
     const isNull = updatedBasket.filter((item) => item == null);
+    // Izveido mainīgo, ar izfiltrētām null vērtībām no "updatedBasket"
     updatedBasket = updatedBasket.filter((item) => item != null);
 
+    // Iestata pārlūkprogrammas lokālās atmiņas "basket" atribūta vērtību
     localStorage.setItem('basket', JSON.stringify(updatedBasket));
+    // Atjauno globālo mainīgo
     updateBasket(updatedBasket);
 
+    // Ja "isNull" masīvā ir kāda vērtība, tad izpildīt funkciju, savādāk izpildīt otro funkciju
     isNull.length ? setPriceHovered(false) : handleHoverShowcase(id);
   };
 
@@ -391,4 +438,5 @@ function UserNavBar({ isPendingUser }) {
     </AppBar>
   );
 }
+
 export default UserNavBar;

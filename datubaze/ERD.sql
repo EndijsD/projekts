@@ -119,8 +119,8 @@ CREATE TABLE IF NOT EXISTS `ERD`.`preces` (
   CONSTRAINT `fk_preces_precu_specifikacija1`
     FOREIGN KEY (`id_precu_specifikacija`)
     REFERENCES `ERD`.`precu_specifikacija` (`precu_specifikacija_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 CREATE UNIQUE INDEX `preces_id_UNIQUE` ON `ERD`.`preces` (`preces_id` ASC) VISIBLE;

@@ -49,5 +49,4 @@ Priekš sava gala eksāmena projekta esmu izlēmis izveidot ģitāru tirdzniecī
 - Dokumentācija
   - 5.nodaļa
   - 6.nodaļa
-  - Secinājumi un pārējās mazās nodaļas
   
