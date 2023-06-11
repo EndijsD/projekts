@@ -78,6 +78,9 @@ const Orders = () => {
                 }
               });
             }
+          } else {
+            setError(false);
+            setIsPending(false);
           }
         }
       });
@@ -90,16 +93,16 @@ const Orders = () => {
         <TableContainer component={Paper}>
           <Table>
             <TableHead>
-              <S.HighlightedTableRow>
+              <S.TableRowNoBottomBorder>
                 {orderHeadings.map((heading) => (
                   <TableCell key={heading}>
                     <S.TableTitle>{heading}</S.TableTitle>
                   </TableCell>
                 ))}
-              </S.HighlightedTableRow>
+              </S.TableRowNoBottomBorder>
             </TableHead>
             <TableBody>
-              {orders ? (
+              {orders.length ? (
                 orders.map((order) => (
                   <Fragment key={order.pasutijumi_id}>
                     <S.StyledTableRow>
@@ -115,18 +118,19 @@ const Orders = () => {
                       </S.StyledTableCell>
                       <S.StyledTableCell>
                         <Typography>
-                          {Boolean(products.length) &&
-                            products
-                              .filter(
-                                (product) =>
-                                  product.id_pasutijumi == order.pasutijumi_id
-                              )
-                              .reduce(
-                                (total, orderProduct) =>
-                                  total + Number(orderProduct.cena),
-                                0
-                              )
-                              .toFixed(2) + ' €'}
+                          {products
+                            .filter(
+                              (product) =>
+                                product.id_pasutijumi == order.pasutijumi_id
+                            )
+                            .reduce(
+                              (total, orderProduct) =>
+                                total +
+                                Number(orderProduct.cena) *
+                                  Number(orderProduct.skaits),
+                              0
+                            )
+                            .toFixed(2) + ' €'}
                         </Typography>
                       </S.StyledTableCell>
                       <S.StyledTableCell>
@@ -229,13 +233,13 @@ const Orders = () => {
                   </Fragment>
                 ))
               ) : (
-                <S.StyledTableRow>
+                <S.TableRowNoBottomBorder>
                   <TableCell colSpan={orderHeadings.length}>
                     <Typography padding="1rem">
                       Jūs nēesat veicis nevienu pasūtījumu
                     </Typography>
                   </TableCell>
-                </S.StyledTableRow>
+                </S.TableRowNoBottomBorder>
               )}
             </TableBody>
           </Table>

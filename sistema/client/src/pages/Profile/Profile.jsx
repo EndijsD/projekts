@@ -226,9 +226,10 @@ const Profile = () => {
         }, 1500);
       } else {
         setIsPending('');
-        logout();
+        setSuccess('delete');
 
         setTimeout(() => {
+          logout();
           setSuccess('');
         }, 1500);
       }
@@ -277,6 +278,9 @@ const Profile = () => {
               onChange={handleFormInputChange}
               required
               autoComplete="true"
+              inputProps={{
+                maxLength: 45,
+              }}
             />
 
             <S.InputField
@@ -287,6 +291,9 @@ const Profile = () => {
               onChange={handleFormInputChange}
               required
               autoComplete="true"
+              inputProps={{
+                maxLength: 45,
+              }}
             />
 
             <S.InputField
@@ -298,6 +305,9 @@ const Profile = () => {
               onChange={handleFormInputChange}
               required
               autoComplete="true"
+              inputProps={{
+                maxLength: 12,
+              }}
             />
 
             <S.InputField
@@ -309,6 +319,9 @@ const Profile = () => {
               onChange={handleFormInputChange}
               required
               autoComplete="true"
+              inputProps={{
+                maxLength: 100,
+              }}
             />
 
             <S.SubmitButton
@@ -346,6 +359,9 @@ const Profile = () => {
               onChange={handleFormInputChange}
               required
               autoComplete="true"
+              inputProps={{
+                maxLength: 7,
+              }}
             />
 
             <S.InputField
@@ -356,6 +372,9 @@ const Profile = () => {
               onChange={handleFormInputChange}
               error={problem == 'adrFields' && !addressValues.pilseta}
               autoComplete="true"
+              inputProps={{
+                maxLength: 60,
+              }}
             />
 
             <S.InputField
@@ -366,6 +385,9 @@ const Profile = () => {
               onChange={handleFormInputChange}
               error={problem == 'adrFields' && !addressValues.novads}
               autoComplete="true"
+              inputProps={{
+                maxLength: 60,
+              }}
             />
 
             <S.InputField
@@ -376,6 +398,9 @@ const Profile = () => {
               onChange={handleFormInputChange}
               error={problem == 'adrFields' && !addressValues.pagasts}
               autoComplete="true"
+              inputProps={{
+                maxLength: 60,
+              }}
             />
 
             <S.InputField
@@ -386,6 +411,9 @@ const Profile = () => {
               onChange={handleFormInputChange}
               error={problem == 'adrFields' && !addressValues.iela}
               autoComplete="true"
+              inputProps={{
+                maxLength: 60,
+              }}
             />
 
             <S.InputField
@@ -396,6 +424,9 @@ const Profile = () => {
               onChange={handleFormInputChange}
               error={problem == 'adrFields' && !addressValues.majas_nos}
               autoComplete="true"
+              inputProps={{
+                maxLength: 60,
+              }}
             />
 
             <S.InputField
@@ -406,6 +437,9 @@ const Profile = () => {
               onChange={handleFormInputChange}
               error={problem == 'adrFields' && !addressValues.dzivokla_nr}
               autoComplete="true"
+              inputProps={{
+                maxLength: 60,
+              }}
             />
 
             <S.SubmitButton
@@ -451,6 +485,7 @@ const Profile = () => {
               }}
               inputProps={{
                 pattern: '(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}',
+                maxLength: 100,
               }}
               onMouseEnter={() =>
                 setActive((prev) =>
@@ -497,6 +532,7 @@ const Profile = () => {
               }}
               inputProps={{
                 pattern: '(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}',
+                maxLength: 100,
               }}
               onMouseEnter={() =>
                 setActive((prev) =>
@@ -552,15 +588,21 @@ const Profile = () => {
 
             <Button
               variant="contained"
-              type="submit"
-              color={'error'}
+              type={success ? undefined : 'submit'}
+              color={success == 'delete' ? 'success' : 'error'}
               disabled={Boolean(isPending)}
               sx={{
                 background: problem == 'delete' && 'DarkRed',
                 '&:hover': { background: problem == 'delete' && 'DarkRed' },
               }}
             >
-              {isPending == 'delete' ? <CircularProgress /> : <>Dzēst kontu</>}
+              {isPending == 'delete' ? (
+                <CircularProgress />
+              ) : success == 'delete' ? (
+                <Check />
+              ) : (
+                <>Dzēst kontu</>
+              )}
             </Button>
           </S.Form>
         </S.StyledPaper>

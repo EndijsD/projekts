@@ -112,7 +112,7 @@ router.get('/orders', authenticateToken, async (req, res) => {
   const user_id = req.data.lietotaji_id;
 
   db.query(
-    `select * from pasutijumi where id_lietotaji = ?`,
+    `select * from pasutijumi where id_lietotaji = ? order by izveidosanas_datums desc`,
     user_id,
     (err, result) => {
       if (err) {

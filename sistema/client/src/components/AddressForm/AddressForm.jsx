@@ -44,6 +44,9 @@ const AddressForm = ({
             required
             autoComplete="true"
             fullWidth
+            inputProps={{
+              maxLength: 45,
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -56,6 +59,9 @@ const AddressForm = ({
             required
             autoComplete="true"
             fullWidth
+            inputProps={{
+              maxLength: 45,
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -69,6 +75,9 @@ const AddressForm = ({
             required
             autoComplete="true"
             fullWidth
+            inputProps={{
+              maxLength: 12,
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -82,6 +91,9 @@ const AddressForm = ({
             required
             autoComplete="true"
             fullWidth
+            inputProps={{
+              maxLength: 100,
+            }}
           />
         </Grid>
       </Grid>
@@ -101,6 +113,9 @@ const AddressForm = ({
             required
             autoComplete="true"
             fullWidth
+            inputProps={{
+              maxLength: 7,
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -113,6 +128,9 @@ const AddressForm = ({
             error={problem == 'adr' && !addressValues.pilseta}
             autoComplete="true"
             fullWidth
+            inputProps={{
+              maxLength: 60,
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -125,6 +143,9 @@ const AddressForm = ({
             error={problem == 'adr' && !addressValues.novads}
             autoComplete="true"
             fullWidth
+            inputProps={{
+              maxLength: 60,
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -137,6 +158,9 @@ const AddressForm = ({
             error={problem == 'adr' && !addressValues.pagasts}
             autoComplete="true"
             fullWidth
+            inputProps={{
+              maxLength: 60,
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -149,6 +173,9 @@ const AddressForm = ({
             error={problem == 'adr' && !addressValues.iela}
             autoComplete="true"
             fullWidth
+            inputProps={{
+              maxLength: 60,
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -161,6 +188,9 @@ const AddressForm = ({
             error={problem == 'adr' && !addressValues.majas_nos}
             autoComplete="true"
             fullWidth
+            inputProps={{
+              maxLength: 60,
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -173,6 +203,9 @@ const AddressForm = ({
             error={problem == 'adr' && !addressValues.dzivokla_nr}
             autoComplete="true"
             fullWidth
+            inputProps={{
+              maxLength: 60,
+            }}
           />
         </Grid>
         <Grid item xs={12}>

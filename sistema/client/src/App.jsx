@@ -114,6 +114,7 @@ const categoryData = [
 
 const admin_token = sessionStorage.getItem('admin_token');
 const user_token = localStorage.getItem('user_token');
+const localBasket = localStorage.getItem('basket');
 
 function App() {
   const {
@@ -121,6 +122,7 @@ function App() {
     changeMode,
     admin,
     updateAdmin,
+    basket,
     updateBasket,
     user,
     updateUser,
@@ -129,6 +131,10 @@ function App() {
     admin_token ? true : false
   );
   const [isPendingUser, setIsPendingUser] = useState(user_token ? true : false);
+  const [isPendingBasket, setIsPendingBasket] = useState(
+    localBasket ? true : false
+  );
+  const [lastStep, setLastStep] = useState(false);
 
   useEffect(() => {
     if (!admin && admin_token) {
@@ -138,8 +144,8 @@ function App() {
         },
       }).then((res) => {
         if (res.ok) updateAdmin(admin_token);
+        setIsPendingAdmin(false);
       });
-      setIsPendingAdmin(false);
     }
 
     if (!user && user_token) {
@@ -149,15 +155,15 @@ function App() {
         },
       }).then((res) => {
         if (res.ok) updateUser(user_token);
+        setIsPendingUser(false);
       });
-      setIsPendingUser(false);
     }
 
     const mode_in_localStorage = localStorage.getItem('mode');
     mode_in_localStorage && changeMode(mode_in_localStorage);
 
-    const basket = localStorage.getItem('basket');
-    basket && updateBasket(JSON.parse(basket));
+    localBasket && updateBasket(JSON.parse(localBasket));
+    setIsPendingBasket(false);
   }, []);
 
   const theme = createTheme({
@@ -178,7 +184,24 @@ function App() {
             <Route index element={<Main />} />
             <Route path="login" element={<UserLogin />} />
             <Route path="register" element={<UserRegister />} />
-            <Route path="checkout" element={<Checkout />} />
+            <Route
+              path="checkout"
+              element={
+                basket.length || lastStep ? (
+                  <Checkout setLastStep={setLastStep} />
+                ) : !isPendingBasket ? (
+                  <NotFound
+                    title="Atvainojiet,"
+                    desc="Jums grozā nav neviena prece!"
+                    displayButton
+                    buttonText="Galvenā lapa"
+                    buttonLink="/"
+                  />
+                ) : (
+                  <div style={{ flex: 1 }}></div>
+                )
+              }
+            />
             <Route path="search" element={<Search />} />
             <Route path="about-us" element={<About />} />
             <Route
@@ -257,13 +280,11 @@ function App() {
               <Route
                 path="/admin/*"
                 element={
-                  !isPendingAdmin ? (
+                  !isPendingAdmin && (
                     <NotFound
                       title="Atvainojiet,"
                       desc="Jums nav piekļuve administrācijas sistēmai"
                     />
-                  ) : (
-                    <></>
                   )
                 }
               />

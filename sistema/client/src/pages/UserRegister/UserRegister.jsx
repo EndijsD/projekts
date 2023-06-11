@@ -145,6 +145,9 @@ const UserRegister = () => {
               onChange={handleFormInputChange}
               required
               autoComplete="true"
+              inputProps={{
+                maxLength: 45,
+              }}
             />
 
             <S.InputField
@@ -155,6 +158,9 @@ const UserRegister = () => {
               onChange={handleFormInputChange}
               required
               autoComplete="true"
+              inputProps={{
+                maxLength: 45,
+              }}
             />
 
             <S.InputField
@@ -166,6 +172,9 @@ const UserRegister = () => {
               onChange={handleFormInputChange}
               required
               autoComplete="true"
+              inputProps={{
+                maxLength: 12,
+              }}
             />
 
             <S.InputField
@@ -177,6 +186,9 @@ const UserRegister = () => {
               onChange={handleFormInputChange}
               required
               autoComplete="true"
+              inputProps={{
+                maxLength: 100,
+              }}
             />
           </S.StyledBox>
 
@@ -193,6 +205,9 @@ const UserRegister = () => {
               onChange={handleFormInputChange}
               required
               autoComplete="true"
+              inputProps={{
+                maxLength: 7,
+              }}
             />
 
             <S.InputField
@@ -203,6 +218,9 @@ const UserRegister = () => {
               onChange={handleFormInputChange}
               error={problems.includes('adr') && !addressValues.pilseta}
               autoComplete="true"
+              inputProps={{
+                maxLength: 60,
+              }}
             />
 
             <S.InputField
@@ -213,6 +231,9 @@ const UserRegister = () => {
               onChange={handleFormInputChange}
               error={problems.includes('adr') && !addressValues.novads}
               autoComplete="true"
+              inputProps={{
+                maxLength: 60,
+              }}
             />
 
             <S.InputField
@@ -223,6 +244,9 @@ const UserRegister = () => {
               onChange={handleFormInputChange}
               error={problems.includes('adr') && !addressValues.pagasts}
               autoComplete="true"
+              inputProps={{
+                maxLength: 60,
+              }}
             />
 
             <S.InputField
@@ -233,6 +257,9 @@ const UserRegister = () => {
               onChange={handleFormInputChange}
               error={problems.includes('adr') && !addressValues.iela}
               autoComplete="true"
+              inputProps={{
+                maxLength: 60,
+              }}
             />
 
             <S.InputField
@@ -243,6 +270,9 @@ const UserRegister = () => {
               onChange={handleFormInputChange}
               error={problems.includes('adr') && !addressValues.majas_nos}
               autoComplete="true"
+              inputProps={{
+                maxLength: 60,
+              }}
             />
 
             <S.InputField
@@ -253,6 +283,9 @@ const UserRegister = () => {
               onChange={handleFormInputChange}
               error={problems.includes('adr') && !addressValues.dzivokla_nr}
               autoComplete="true"
+              inputProps={{
+                maxLength: 60,
+              }}
             />
           </S.StyledBox>
 
@@ -277,6 +310,7 @@ const UserRegister = () => {
               }}
               inputProps={{
                 pattern: '(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}',
+                maxLength: 100,
               }}
               onMouseEnter={() =>
                 setActive((prev) =>
@@ -323,6 +357,7 @@ const UserRegister = () => {
               }}
               inputProps={{
                 pattern: '(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}',
+                maxLength: 100,
               }}
               onMouseEnter={() =>
                 setActive((prev) =>

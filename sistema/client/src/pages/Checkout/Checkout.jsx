@@ -44,7 +44,7 @@ const initialCardValues = {
 
 let user_id = null;
 
-const Checkout = () => {
+const Checkout = ({ setLastStep }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [userValues, setUserValues] = useState(initialUserValues);
   const [addressValues, setAddressValues] = useState(initialAddressValues);
@@ -143,6 +143,7 @@ const Checkout = () => {
     }
 
     if (activeStep == steps.length - 1) {
+      setLastStep(true);
       setIsPending(true);
 
       if (user) {

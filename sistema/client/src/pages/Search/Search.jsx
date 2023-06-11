@@ -11,12 +11,21 @@ const Search = () => {
   return (
     <S.StyledContainer>
       <GridLayout
-        title={`Meklēšanas rezultāti frāzei "${search.trim()}" (${
-          data &&
-          data.filter((item) =>
-            item.nosaukums.toLowerCase().includes(search.trim().toLowerCase())
-          ).length
-        })`}
+        title={
+          (search
+            ? `Meklēšanas rezultāti frāzei "${search.trim()}"`
+            : 'Visas preces') +
+          (isPending
+            ? ''
+            : ` (${
+                data &&
+                data.filter((item) =>
+                  item.nosaukums
+                    .toLowerCase()
+                    .includes(search.trim().toLowerCase())
+                ).length
+              })`)
+        }
         data={
           data &&
           data.filter((item) =>

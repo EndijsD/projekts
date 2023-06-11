@@ -22,7 +22,7 @@ export const StyledTableCell = styled(TableCell)({
   textAlign: 'center',
 });
 
-export const HighlightedTableRow = styled(TableRow)({
+export const TableRowNoBottomBorder = styled(TableRow)({
   '&:last-child td': {
     border: 0,
   },

@@ -9,12 +9,6 @@ Priekš sava gala eksāmena projekta esmu izlēmis izveidot ģitāru tirdzniecī
 
 ### *Izmantotās tehnoloģijas* 💻
 ---
-##### Datubāze
-- MySQL Workbench
-
-##### Dokumentācija
-- Word 2016
-
 ##### Sistēma
 - JavaScript - React un Node.js
 - HTML
@@ -22,6 +16,12 @@ Priekš sava gala eksāmena projekta esmu izlēmis izveidot ģitāru tirdzniecī
 - Git & GitHub
 - Visual Studio Code
 - Trello
+
+##### Datubāze
+- MySQL Workbench
+
+##### Dokumentācija
+- Word 2016
 
 <br>
 
@@ -46,6 +46,9 @@ Priekš sava gala eksāmena projekta esmu izlēmis izveidot ģitāru tirdzniecī
 
 ### *Veicamie darbi* ✅
 ---
+- Sistēma
+  - Pabeigta
+- Datubāze
+  - Pabeigta
 - Dokumentācija
-  - 6.nodaļa
-  
+  - Pabeigta
